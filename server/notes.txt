@@ -1,0 +1,7 @@
+docker compose exec server npx prisma migrate dev --name init
+docker compose exec server npx prisma generate
+docker compose exec server npx prisma studio
+
+docker compose exec server npx prisma studio --port 5555 --browser none --url "postgresql://postgres:prisma@db-container:5432/railway"
+
+sudo chown -R $USER:$USER ./server/generated

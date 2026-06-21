@@ -1,0 +1,24 @@
+# dependencies
+node_modules
+**/node_modules
+
+# env
+.env
+**/.env
+
+# build
+dist
+build
+.next
+
+# logs
+*.log
+
+# prisma
+prisma/*.db
+
+# docker
+postgres-data
+
+# OS
+.DS_Store

@@ -1,0 +1,40 @@
+services:
+# ======================= DATABASE ========================
+  db-container:
+   image: postgres:latest
+   volumes:
+    - railway_postgres_data:/var/lib/postgresql
+   env_file:
+    - ./server/.env
+# =================== REDIS =====================
+  redis-db:
+    image: redis:8.6.4-trixie
+    volumes:
+      - redis_data:/data
+    
+
+# ===================== SERVER ======================
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+
+    ports:
+      - "5000:5000"
+      - "5555:5555"
+
+    volumes:
+      - ./server:/app #bind mount
+      - /app/node_modules #anonymous volume
+    env_file:
+      - ./server/.env
+
+    depends_on:
+      - db-container
+      - redis-db
+
+    
+      
+volumes:
+ railway_postgres_data: 
+ redis_data:

@@ -1,0 +1,150 @@
+{
+  "staffTypes": [
+    "Station Master",
+    "Assistant Station Master",
+    "Ticket Clerk",
+    "Booking Assistant",
+    "Train Guard",
+    "Train Driver",
+    "Signal Operator",
+    "Pointsman",
+    "Platform Supervisor",
+    "Station Controller",
+    "Security Guard",
+    "Maintenance Engineer",
+    "Electrician",
+    "Track Maintainer",
+    "Cleaner",
+    "Office Assistant",
+    "Account Officer",
+    "HR Officer",
+    "IT Support",
+    "Customer Service Officer"
+  ]
+}
+
+
+
+
+
+{
+  "staffPermissions": {
+
+    "Station Master": [
+      "view station",
+      "update station",
+      "manage staff",
+      "assign shift",
+      "view train",
+      "manage train schedule",
+      "update train status",
+      "create report",
+      "view report"
+    ],
+
+    "Assistant Station Master": [
+      "view station",
+      "view staff",
+      "assign shift",
+      "view train",
+      "update train status",
+      "create report"
+    ],
+
+    "Ticket Clerk": [
+      "view train",
+      "view schedule",
+      "create ticket",
+      "cancel ticket",
+      "view passenger"
+    ],
+
+    "Booking Assistant": [
+      "view train",
+      "view schedule",
+      "create ticket",
+      "update ticket"
+    ],
+
+    "Train Driver": [
+      "view assigned train",
+      "view route",
+      "view schedule",
+      "update trip status"
+    ],
+
+    "Train Guard": [
+      "view assigned train",
+      "view passenger",
+      "update trip status",
+      "create incident report"
+    ],
+
+    "Signal Operator": [
+      "view train",
+      "update signal",
+      "manage signal status"
+    ],
+
+    "Pointsman": [
+      "view train",
+      "manage track",
+      "update track status"
+    ],
+
+    "Platform Supervisor": [--------------------------
+      "view platform",
+      "manage platform",
+      "view schedule",
+      "update arrival departure"
+    ],
+
+    "Security Guard": [
+      "view station",
+      "create security report",
+      "view incident"
+    ],
+
+    "Maintenance Engineer": [
+      "view maintenance task",
+      "create maintenance report",
+      "update maintenance status"
+    ],
+
+    "Electrician": [
+      "view maintenance task",
+      "update equipment status"
+    ],
+
+    "Track Maintainer": [
+      "view track",
+      "update track status",
+      "create report"
+    ],
+
+    "Account Officer": [
+      "view payment",
+      "manage transaction",
+      "view financial report"
+    ],
+
+    "HR Officer": [
+      "view staff",
+      "manage attendance",
+      "manage leave"
+    ],
+
+    "IT Support": [
+      "manage system",
+      "view logs",
+      "manage devices"
+    ],
+
+    "Customer Service Officer": [
+      "view passenger",
+      "handle complaint",
+      "create support ticket"
+    ]
+
+  }
+}

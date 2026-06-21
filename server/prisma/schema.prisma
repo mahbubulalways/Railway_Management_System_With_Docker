@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+//==================== PERMISSION MODEL ======================
+model Permission {
+  id               String            @id @default(uuid())
+  permission       String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  staffPermissions StaffPermission[]
+}
+
+//============= ROLE PERMISSION INTERMIDIATE MODEL ============
+model StaffPermission {
+  id           String     @id @default(uuid())
+  permissionId String
+  staffId      String
+  staff        Staff      @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([staffId, permissionId])
+}
+
+//============= USER MODEL ============
+enum USER_ROLE {
+  SUPER_ADMIN
+  ADMIN
+  STAFF
+  PESSENGER
+}
+
+enum USER_STATUS {
+  ACTIVE
+  INACTIVE
+  BLOCK
+}
+
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  phone      String      @unique
+  password   String
+  role       USER_ROLE   @default(PESSENGER)
+  isDeleted  Boolean     @default(false)
+  status     USER_STATUS @default(INACTIVE)
+  isVerified Boolean     @default(false)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  admin      Admin?
+  staff      Staff?
+}
+
+//============= ADMIN MODEL ============//
+model Admin {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  name        String
+  avatar      String?
+  user        User     @relation(fields: [userId], references: [id])
+  joiningDate DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+//================== STATION INFORMATION MODEL ================
+model Station {
+  id                    String     @id @default(uuid())
+  stationId             String     @unique
+  phone                 String     @unique
+  email                 String     @unique
+  type                  String
+  division              String
+  district              String
+  name                  String
+  status                String     @default("Active")
+  establishedYear       Int?
+  notes                 String?
+  ticketCounter         Boolean    @default(false)
+  onlineTicketSupport   Boolean    @default(false)
+  foodCourt             Boolean    @default(false)
+  parking               Boolean    @default(false)
+  hasDisplayBoard       Boolean    @default(false)
+  hasAnnouncementSystem Boolean    @default(false)
+  wheelchairAccess      Boolean    @default(false)
+  wifi                  Boolean    @default(false)
+  washroom              Boolean    @default(false)
+  atm                   Boolean    @default(false)
+  securityService       Boolean    @default(false)
+  cctv                  Boolean    @default(false)
+  prayerRoom            Boolean    @default(false)
+  escalator             Boolean    @default(false)
+  lift                  Boolean    @default(false)
+  platforms             Platform[]
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+  staffs                Staff[]
+
+  @@map("stations")
+}
+
+model Platform {
+  id String @id @default(uuid())
+
+  stationId String
+  station   Station  @relation(fields: [stationId], references: [stationId], onDelete: Cascade)
+  name      String
+  type      String
+  status    String   @default("Active")
+  length    Int
+  capacity  Int
+  hasRoof   Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("platforms")
+}
+
+// ================ STAFF MODEL =====================
+enum ShiftType {
+  MORNING
+  EVENING
+  NIGHT
+}
+
+enum StaffType {
+  STATION_MASTER
+  ASSISTANT_STATION_MASTER
+  TICKET_CLERK
+  BOOKING_ASSISTANT
+  TRAIN_GUARD
+  TRAIN_DRIVER
+  SIGNAL_OPERATOR
+  POINTSMAN
+  PLATFORM_SUPERVISOR
+  STATION_CONTROLLER
+  SECURITY_GUARD
+  MAINTENANCE_ENGINEER
+  ELECTRICIAN
+  TRACK_MAINTAINER
+  CLEANER
+  OFFICE_ASSISTANT
+  ACCOUNT_OFFICER
+  HR_OFFICER
+  IT_SUPPORT
+  CUSTOMER_SERVICE_OFFICER
+}
+
+model Staff {
+  id      String @id @default(uuid())
+  staffId String @unique
+
+  name             String
+  avatar           String?
+  staffType        StaffType
+  shift            ShiftType         @default(MORNING)
+  dutyStartTime    String?
+  dutyEndTime      String?
+  resignationDate  DateTime?
+  address          String?
+  joiningDate      DateTime          @default(now())
+  staffPermissions StaffPermission[]
+
+  stationId String
+  station   Station @relation(fields: [stationId], references: [id])
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
