@@ -148,3 +148,59 @@
 
   }
 }
+
+
+
+
+
+
+
+
+{  "data":{
+    "permission":[
+  "view station",
+  "update station",
+  "manage staff",
+  "assign shift",
+  "view train",
+  "manage train schedule",
+  "update train status",
+  "create report",
+  "view report"
+//   "view staff",
+//   "view schedule",
+//   "create ticket",
+//   "cancel ticket",
+//   "update ticket",
+//   "view passenger",
+//   "view assigned train",
+//   "view route",
+//   "update trip status",
+//   "create incident report",
+//   "update signal",
+//   "manage signal status",
+//   "manage track",
+//   "update track status",
+//   "view track",
+//   "view platform",
+//   "manage platform",
+//   "update arrival departure",
+//   "create security report",
+//   "view incident",
+//   "view maintenance task",
+//   "create maintenance report",
+//   "update maintenance status",
+//   "update equipment status",
+//   "view payment",
+//   "manage transaction",
+//   "view financial report",
+//   "manage attendance",
+//   "manage leave",
+//   "manage system",
+//   "view logs",
+//   "manage devices",
+//   "handle complaint",
+//   "create support ticket"
+]
+}
+}

@@ -25,8 +25,31 @@ const CreatePermissionController = catchAsync(async (req, res) => {
 
 // GET PERMISSION FROM DB
 const GetPermissionsController = catchAsync(async (req, res) => {
-  const result = await PermissionService.GetPermissionsService();
+  const page = Number(req.query.page) ?? 1;
+  const limit = Number(req.query.limit) ?? 10;
+
+  const result = await PermissionService.GetPermissionsService({ page, limit });
   if (!result.data.length) {
+    sendResponse(res, {
+      message: "Opps! No permission found.",
+      statusCode: StatusCodes.OK,
+      success: true,
+      data: [],
+    });
+  } else {
+    sendResponse(res, {
+      message: "Permission retrieved successfully",
+      statusCode: StatusCodes.OK,
+      success: true,
+      data: result,
+    });
+  }
+});
+
+//  GET ALL PERMISSION FOR CREATE STAFF TYPE
+const GetAllPermissionsForStaffTypeController = catchAsync(async (req, res) => {
+  const result = await PermissionService.GetAllPermissionsForStaffTypeService();
+  if (!result.length) {
     sendResponse(res, {
       message: "Opps! No permission found.",
       statusCode: StatusCodes.OK,
@@ -87,4 +110,5 @@ export const PermissionController = {
   GetPermissionsController,
   UpdatePermissionController,
   HardDeletePermissionController,
+  GetAllPermissionsForStaffTypeController,
 };

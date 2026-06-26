@@ -4,9 +4,11 @@ import { USER_ROLE } from "../../../generated/prisma/enums";
 import { StaffController } from "./staff.controller";
 
 const router = Router();
+router.get("/", AuthGuard(USER_ROLE.ADMIN), StaffController.GetStaffController);
 router.get(
-  "/",
+  "/single-staff/:id",
   AuthGuard(USER_ROLE.ADMIN),
-  StaffController.GetAdminsController,
+  StaffController.GetStaffController,
 );
+
 export default router;

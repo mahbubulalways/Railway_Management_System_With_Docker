@@ -390,6 +390,7 @@ export const ModelName = {
   Admin: 'Admin',
   Station: 'Station',
   Platform: 'Platform',
+  StaffType: 'StaffType',
   Staff: 'Staff'
 } as const
 
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "permission" | "staffPermission" | "user" | "admin" | "station" | "platform" | "staff"
+    modelProps: "permission" | "staffPermission" | "user" | "admin" | "station" | "platform" | "staffType" | "staff"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -854,6 +855,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StaffType: {
+      payload: Prisma.$StaffTypePayload<ExtArgs>
+      fields: Prisma.StaffTypeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StaffTypeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StaffTypeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload>
+        }
+        findFirst: {
+          args: Prisma.StaffTypeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StaffTypeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload>
+        }
+        findMany: {
+          args: Prisma.StaffTypeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload>[]
+        }
+        create: {
+          args: Prisma.StaffTypeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload>
+        }
+        createMany: {
+          args: Prisma.StaffTypeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StaffTypeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload>[]
+        }
+        delete: {
+          args: Prisma.StaffTypeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload>
+        }
+        update: {
+          args: Prisma.StaffTypeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload>
+        }
+        deleteMany: {
+          args: Prisma.StaffTypeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StaffTypeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StaffTypeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload>[]
+        }
+        upsert: {
+          args: Prisma.StaffTypeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffTypePayload>
+        }
+        aggregate: {
+          args: Prisma.StaffTypeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStaffType>
+        }
+        groupBy: {
+          args: Prisma.StaffTypeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StaffTypeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StaffTypeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StaffTypeCountAggregateOutputType> | number
+        }
+      }
+    }
     Staff: {
       payload: Prisma.$StaffPayload<ExtArgs>
       fields: Prisma.StaffFieldRefs
@@ -980,9 +1055,9 @@ export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof
 export const StaffPermissionScalarFieldEnum = {
   id: 'id',
   permissionId: 'permissionId',
-  staffId: 'staffId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  staffTypeId: 'staffTypeId'
 } as const
 
 export type StaffPermissionScalarFieldEnum = (typeof StaffPermissionScalarFieldEnum)[keyof typeof StaffPermissionScalarFieldEnum]
@@ -1067,12 +1142,22 @@ export const PlatformScalarFieldEnum = {
 export type PlatformScalarFieldEnum = (typeof PlatformScalarFieldEnum)[keyof typeof PlatformScalarFieldEnum]
 
 
+export const StaffTypeScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StaffTypeScalarFieldEnum = (typeof StaffTypeScalarFieldEnum)[keyof typeof StaffTypeScalarFieldEnum]
+
+
 export const StaffScalarFieldEnum = {
   id: 'id',
   staffId: 'staffId',
+  staffTypeId: 'staffTypeId',
   name: 'name',
   avatar: 'avatar',
-  staffType: 'staffType',
   shift: 'shift',
   dutyStartTime: 'dutyStartTime',
   dutyEndTime: 'dutyEndTime',
@@ -1192,20 +1277,6 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
- * Reference to a field of type 'StaffType'
- */
-export type EnumStaffTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StaffType'>
-    
-
-
-/**
- * Reference to a field of type 'StaffType[]'
- */
-export type ListEnumStaffTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StaffType[]'>
     
 
 
@@ -1352,6 +1423,7 @@ export type GlobalOmitConfig = {
   admin?: Prisma.AdminOmit
   station?: Prisma.StationOmit
   platform?: Prisma.PlatformOmit
+  staffType?: Prisma.StaffTypeOmit
   staff?: Prisma.StaffOmit
 }
 

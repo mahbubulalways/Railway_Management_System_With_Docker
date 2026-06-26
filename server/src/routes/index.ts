@@ -5,7 +5,7 @@ import adminRoutes from "../app/modules/admin/admin.route";
 import authRoutes from "../app/modules/auth/auth.route";
 import stationRoutes from "../app/modules/station/station.routes";
 import staffRoutes from "../app/modules/staff/staff.route";
-
+import staffTypesRoutes from "../app/modules/staff-types/staff-types.route";
 type TApplicationRoutes = {
   route: Router;
   path: string;
@@ -36,6 +36,10 @@ const applicationRoutes: TApplicationRoutes[] = [
   {
     path: "/staff",
     route: staffRoutes,
+  },
+  {
+    path: "/staff-type",
+    route: staffTypesRoutes,
   },
 ];
 

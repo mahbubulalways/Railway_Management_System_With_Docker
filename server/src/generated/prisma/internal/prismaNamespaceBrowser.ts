@@ -57,6 +57,7 @@ export const ModelName = {
   Admin: 'Admin',
   Station: 'Station',
   Platform: 'Platform',
+  StaffType: 'StaffType',
   Staff: 'Staff'
 } as const
 
@@ -89,9 +90,9 @@ export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof
 export const StaffPermissionScalarFieldEnum = {
   id: 'id',
   permissionId: 'permissionId',
-  staffId: 'staffId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  staffTypeId: 'staffTypeId'
 } as const
 
 export type StaffPermissionScalarFieldEnum = (typeof StaffPermissionScalarFieldEnum)[keyof typeof StaffPermissionScalarFieldEnum]
@@ -176,12 +177,22 @@ export const PlatformScalarFieldEnum = {
 export type PlatformScalarFieldEnum = (typeof PlatformScalarFieldEnum)[keyof typeof PlatformScalarFieldEnum]
 
 
+export const StaffTypeScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StaffTypeScalarFieldEnum = (typeof StaffTypeScalarFieldEnum)[keyof typeof StaffTypeScalarFieldEnum]
+
+
 export const StaffScalarFieldEnum = {
   id: 'id',
   staffId: 'staffId',
+  staffTypeId: 'staffTypeId',
   name: 'name',
   avatar: 'avatar',
-  staffType: 'staffType',
   shift: 'shift',
   dutyStartTime: 'dutyStartTime',
   dutyEndTime: 'dutyEndTime',

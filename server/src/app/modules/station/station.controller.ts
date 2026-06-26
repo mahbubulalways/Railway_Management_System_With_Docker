@@ -5,7 +5,9 @@ import sendResponse from "../../../utils/sendResponse";
 import { StationService } from "./station.service";
 import { IQuery } from "./station.interface";
 
-// CREATE MULTIPLE STATIONS
+// ====================== PRIVATE ROUTE ========================
+
+// CREATE MULTIPLE STATIONS (PRIVATE ROUTE)
 const CreateMultipleStationController = catchAsync(async (req, res) => {
   const body = req.body.data;
   const result = await StationService.CreateMultipleStationService(body);
@@ -25,10 +27,10 @@ const CreateMultipleStationController = catchAsync(async (req, res) => {
   }
 });
 
-// CREATE STATION
+// CREATE STATION (PRIVATE ROUTE)
 const CreateStationController = catchAsync(async (req, res) => {
   const body = req.body.data;
-  const result = await StationService.CreateStationService(body);
+  const result = await StationService.CreateStationServicePrivate(body);
 
   if (!result) {
     throw new AppError(
@@ -45,10 +47,36 @@ const CreateStationController = catchAsync(async (req, res) => {
   }
 });
 
-// GET ALL STATIONS
-const GetStationsController = catchAsync(async (req, res) => {
+// GET OWN STATION WHO HAVE THE PERMISSION
+const GetOwnStationPermissionControllerPrivate = catchAsync(
+  async (req, res) => {
+    const userId = req.user.userId;
+    const result =
+      await StationService.GetOwnStationPermissionServicePrivate(userId);
+    if (!result) {
+      sendResponse(res, {
+        message: "Opps! No station found.",
+        statusCode: StatusCodes.OK,
+        success: true,
+        data: [],
+      });
+    } else {
+      sendResponse(res, {
+        message: "Stations retrieved successfully",
+        statusCode: StatusCodes.OK,
+        success: true,
+        data: result,
+      });
+    }
+  },
+);
+
+// ====================== PUBLIC ROUTE ========================
+
+// GET ALL STATIONS (PUBLIC ROUTE)
+const GetStationsControllerPublic = catchAsync(async (req, res) => {
   const query = { ...req.query } as IQuery;
-  const result = await StationService.GetStationService(query);
+  const result = await StationService.GetStationServicePublic(query);
   if (!result.data.length) {
     sendResponse(res, {
       message: "Opps! No station found.",
@@ -65,11 +93,10 @@ const GetStationsController = catchAsync(async (req, res) => {
     });
   }
 });
-
-// GET SINGLE STATION
-const GetSingleStationController = catchAsync(async (req, res) => {
+// GET SINGLE STATION (PUBLIC ROUTE)
+const GetSingleStationControllerPublic = catchAsync(async (req, res) => {
   const id = req.params.id as string;
-  const result = await StationService.GetSingleStationService(id);
+  const result = await StationService.GetSingleStationServicePublic(id);
   if (!result) {
     sendResponse(res, {
       message: "Opps! No station found.",
@@ -89,7 +116,8 @@ const GetSingleStationController = catchAsync(async (req, res) => {
 
 export const StationController = {
   CreateStationController,
-  GetStationsController,
-  GetSingleStationController,
+  GetStationsControllerPublic,
+  GetSingleStationControllerPublic,
   CreateMultipleStationController,
+  GetOwnStationPermissionControllerPrivate,
 };

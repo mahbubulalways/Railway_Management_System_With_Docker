@@ -10,7 +10,7 @@ import notFound from "./app/middleware/notFound";
 import globalErrorHandler from "./app/middleware/globalErrorHandler";
 const app: Application = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use("/api/v1", applicationRoutes);
 
 // TEST ROUTE

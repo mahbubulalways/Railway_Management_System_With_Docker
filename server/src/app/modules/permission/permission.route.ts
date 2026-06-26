@@ -16,9 +16,16 @@ router.post(
 
 // GET PERMISSION FROM DB
 router.get(
-  "/",
+  "/all",
   AuthGuard("ADMIN"),
   PermissionController.GetPermissionsController,
+);
+
+// GET PERMISSION FROM DB FOR CREARE STAFF TYTPE
+router.get(
+  "/all-permissions",
+  AuthGuard("ADMIN"),
+  PermissionController.GetAllPermissionsForStaffTypeController,
 );
 
 // UPDATE PERMISSION IN DB

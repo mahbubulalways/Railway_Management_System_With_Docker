@@ -20,13 +20,13 @@ model Permission {
 model StaffPermission {
   id           String     @id @default(uuid())
   permissionId String
-  staffId      String
-  staff        Staff      @relation(fields: [staffId], references: [id], onDelete: Cascade)
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
+  staffType    StaffType? @relation(fields: [staffTypeId], references: [id], onDelete: Cascade)
+  staffTypeId  String?
 
-  @@unique([staffId, permissionId])
+  @@unique([staffTypeId, permissionId])
 }
 
 //============= USER MODEL ============
@@ -130,46 +130,54 @@ enum ShiftType {
   NIGHT
 }
 
-enum StaffType {
-  STATION_MASTER
-  ASSISTANT_STATION_MASTER
-  TICKET_CLERK
-  BOOKING_ASSISTANT
-  TRAIN_GUARD
-  TRAIN_DRIVER
-  SIGNAL_OPERATOR
-  POINTSMAN
-  PLATFORM_SUPERVISOR
-  STATION_CONTROLLER
-  SECURITY_GUARD
-  MAINTENANCE_ENGINEER
-  ELECTRICIAN
-  TRACK_MAINTAINER
-  CLEANER
-  OFFICE_ASSISTANT
-  ACCOUNT_OFFICER
-  HR_OFFICER
-  IT_SUPPORT
-  CUSTOMER_SERVICE_OFFICER
+// enum StaffType {
+//   STATION_MASTER
+//   ASSISTANT_STATION_MASTER
+//   TICKET_CLERK
+//   BOOKING_ASSISTANT
+//   TRAIN_GUARD
+//   TRAIN_DRIVER
+//   SIGNAL_OPERATOR
+//   POINTSMAN
+//   PLATFORM_SUPERVISOR
+//   STATION_CONTROLLER
+//   SECURITY_GUARD
+//   MAINTENANCE_ENGINEER
+//   ELECTRICIAN
+//   TRACK_MAINTAINER
+//   CLEANER
+//   OFFICE_ASSISTANT
+//   ACCOUNT_OFFICER
+//   HR_OFFICER
+//   IT_SUPPORT
+//   CUSTOMER_SERVICE_OFFICER
+// }
+
+model StaffType {
+  id               String            @id @default(uuid())
+  type             String            @unique
+  staffs           Staff[]
+  staffPermissions StaffPermission[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 }
 
 model Staff {
-  id      String @id @default(uuid())
-  staffId String @unique
-
-  name             String
-  avatar           String?
-  staffType        StaffType
-  shift            ShiftType         @default(MORNING)
-  dutyStartTime    String?
-  dutyEndTime      String?
-  resignationDate  DateTime?
-  address          String?
-  joiningDate      DateTime          @default(now())
-  staffPermissions StaffPermission[]
+  id              String    @id @default(uuid())
+  staffId         String    @unique
+  staffTypeId     String
+  name            String
+  avatar          String?
+  staffType       StaffType @relation(fields: [staffTypeId], references: [id])
+  shift           ShiftType @default(MORNING)
+  dutyStartTime   String?
+  dutyEndTime     String?
+  resignationDate DateTime?
+  address         String?
+  joiningDate     DateTime  @default(now())
 
   stationId String
-  station   Station @relation(fields: [stationId], references: [id])
+  station   Station @relation(fields: [stationId], references: [stationId])
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])

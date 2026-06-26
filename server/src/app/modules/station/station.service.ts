@@ -64,8 +64,8 @@ const CreateMultipleStationService = async (
   return result;
 };
 
-// CREATE STATION
-const CreateStationService = async (payload: IStationWithPlatforms) => {
+// CREATE STATION (PRIVATE ROUTE)
+const CreateStationServicePrivate = async (payload: IStationWithPlatforms) => {
   const divisionCode = payload.station.division
     .split(" ")[0]
     .slice(0, 4)
@@ -113,9 +113,34 @@ const CreateStationService = async (payload: IStationWithPlatforms) => {
   return result;
 };
 
-// CREATE STATION INTO DB
-const GetStationService = async (query: IQuery) => {
-  const pagination = paginationHelper(Number(query.page), Number(query.limit));
+// ================= PRIVATE ROUTE ======================
+
+// GET OWN STATION WHO HAVE THE PERMISSION
+const GetOwnStationPermissionServicePrivate = async (userId: string) => {
+  const result = await prisma.$transaction(
+    async (tx: Prisma.TransactionClient) => {
+      const staff = await tx.staff.findFirst({
+        where: { userId },
+        select: { stationId: true },
+      });
+      console.log(staff?.stationId);
+      return await tx.station.findFirst({
+        where: { stationId: staff?.stationId },
+        include: { platforms: true, staffs: { include: { user: true } } },
+      });
+    },
+  );
+  return result;
+};
+
+// ==================== PUBLIC ROUTE ======================
+
+// CREATE STATION FROM DB (PUBLIC ROUTE)
+const GetStationServicePublic = async (query: IQuery) => {
+  const pagination = paginationHelper(
+    Number(query.page) | 1,
+    Number(query.limit) | 12,
+  );
 
   const [result, total] = await prisma.$transaction([
     prisma.station.findMany({
@@ -142,8 +167,8 @@ const GetStationService = async (query: IQuery) => {
   };
 };
 
-// GET SINGLE STATION
-const GetSingleStationService = async (stationId: string) => {
+// GET SINGLE STATION  (PUBLIC ROUTE)
+const GetSingleStationServicePublic = async (stationId: string) => {
   const result = await prisma.station.findFirst({
     where: { stationId },
     include: { platforms: true },
@@ -152,8 +177,9 @@ const GetSingleStationService = async (stationId: string) => {
 };
 
 export const StationService = {
-  CreateStationService,
-  GetStationService,
-  GetSingleStationService,
+  CreateStationServicePrivate,
+  GetStationServicePublic,
+  GetSingleStationServicePublic,
   CreateMultipleStationService,
+  GetOwnStationPermissionServicePrivate,
 };

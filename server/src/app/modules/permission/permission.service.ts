@@ -1,9 +1,10 @@
 import { StatusCodes } from "http-status-codes";
-import { Permission, Role } from "../../../generated/prisma/client";
+import { Permission } from "../../../generated/prisma/client";
 import prisma from "../../../helper/prisma";
 import { AppError } from "../../error/AppError";
 import { createMetaConfig } from "../../../utils/createMetaConfig";
 import redisClient from "../../../redis";
+import { TQuery } from "../../../interface/query";
 
 // CREATE PERMISSION INTO DB
 const CreatePermissionService = async (payload: Permission) => {
@@ -29,23 +30,47 @@ const CreatePermissionService = async (payload: Permission) => {
   return result;
 };
 
+// EXTENDED VERSION
+// const CreatePermissionService = async (payload: Permission) => {
+//   const permission = payload.permission.map((p) =>
+//     p.toLocaleUpperCase().split(" ").join("_"),
+//   );
+
+//   const result = [];
+//   const delay = (ms: number) =>
+//     new Promise((resolve) => setTimeout(resolve, ms));
+
+//   for (let i = 0; i < payload.permission.length; i++) {
+//     const each = payload.permission[i];
+
+//     const per = await prisma.permission.create({
+//       data: { permission: each },
+//     });
+
+//     result.push(per);
+
+//     await delay(5000);
+//   }
+
+//   return result;
+// };
+
 // GET ROLE FROM DB
-const GetPermissionsService = async () => {
-  const limit = 10;
-  const page = 1;
+const GetPermissionsService = async (query: TQuery) => {
+  const limit = query?.limit as number;
+  const page = query?.page as number;
 
   const skip = (page - 1) * limit;
-
   const redisData = await redisClient.get("permission");
 
   if (redisData) {
     await redisClient.flushAll();
-    return JSON.parse(redisData);
+    // return JSON.parse(redisData);
   }
 
   const result = await prisma.permission.findMany({
-    // skip,
-    // take: limit,
+    skip,
+    take: limit,
     orderBy: { createdAt: "asc" },
   });
 
@@ -56,12 +81,29 @@ const GetPermissionsService = async () => {
     totalData,
   });
 
+  // await redisClient.set("permission", JSON.stringify(data));
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   const data = {
     meta,
     data: result,
   };
-  await redisClient.set("permission", JSON.stringify(data));
   return data;
+};
+
+//  GET ALL PERMISSION FOR CREATE STAFF TYPE
+const GetAllPermissionsForStaffTypeService = async () => {
+  const redisData = await redisClient.get("permission");
+  if (redisData) {
+    await redisClient.flushAll();
+    // return JSON.parse(redisData);
+  }
+
+  const result = await prisma.permission.findMany({
+    select: { permission: true, id: true },
+    orderBy: { createdAt: "asc" },
+  });
+  // await redisClient.set("permission", JSON.stringify(data));
+  return result;
 };
 
 // UPDATE ROLE FROM DB
@@ -96,4 +138,5 @@ export const PermissionService = {
   GetPermissionsService,
   UpdatePermissionServivce,
   HardDeleteRoleServivce,
+  GetAllPermissionsForStaffTypeService,
 };

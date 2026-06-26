@@ -27,9 +27,9 @@ export type AggregateStaff = {
 export type StaffMinAggregateOutputType = {
   id: string | null
   staffId: string | null
+  staffTypeId: string | null
   name: string | null
   avatar: string | null
-  staffType: $Enums.StaffType | null
   shift: $Enums.ShiftType | null
   dutyStartTime: string | null
   dutyEndTime: string | null
@@ -45,9 +45,9 @@ export type StaffMinAggregateOutputType = {
 export type StaffMaxAggregateOutputType = {
   id: string | null
   staffId: string | null
+  staffTypeId: string | null
   name: string | null
   avatar: string | null
-  staffType: $Enums.StaffType | null
   shift: $Enums.ShiftType | null
   dutyStartTime: string | null
   dutyEndTime: string | null
@@ -63,9 +63,9 @@ export type StaffMaxAggregateOutputType = {
 export type StaffCountAggregateOutputType = {
   id: number
   staffId: number
+  staffTypeId: number
   name: number
   avatar: number
-  staffType: number
   shift: number
   dutyStartTime: number
   dutyEndTime: number
@@ -83,9 +83,9 @@ export type StaffCountAggregateOutputType = {
 export type StaffMinAggregateInputType = {
   id?: true
   staffId?: true
+  staffTypeId?: true
   name?: true
   avatar?: true
-  staffType?: true
   shift?: true
   dutyStartTime?: true
   dutyEndTime?: true
@@ -101,9 +101,9 @@ export type StaffMinAggregateInputType = {
 export type StaffMaxAggregateInputType = {
   id?: true
   staffId?: true
+  staffTypeId?: true
   name?: true
   avatar?: true
-  staffType?: true
   shift?: true
   dutyStartTime?: true
   dutyEndTime?: true
@@ -119,9 +119,9 @@ export type StaffMaxAggregateInputType = {
 export type StaffCountAggregateInputType = {
   id?: true
   staffId?: true
+  staffTypeId?: true
   name?: true
   avatar?: true
-  staffType?: true
   shift?: true
   dutyStartTime?: true
   dutyEndTime?: true
@@ -210,9 +210,9 @@ export type StaffGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type StaffGroupByOutputType = {
   id: string
   staffId: string
+  staffTypeId: string
   name: string
   avatar: string | null
-  staffType: $Enums.StaffType
   shift: $Enums.ShiftType
   dutyStartTime: string | null
   dutyEndTime: string | null
@@ -249,9 +249,9 @@ export type StaffWhereInput = {
   NOT?: Prisma.StaffWhereInput | Prisma.StaffWhereInput[]
   id?: Prisma.StringFilter<"Staff"> | string
   staffId?: Prisma.StringFilter<"Staff"> | string
+  staffTypeId?: Prisma.StringFilter<"Staff"> | string
   name?: Prisma.StringFilter<"Staff"> | string
   avatar?: Prisma.StringNullableFilter<"Staff"> | string | null
-  staffType?: Prisma.EnumStaffTypeFilter<"Staff"> | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFilter<"Staff"> | $Enums.ShiftType
   dutyStartTime?: Prisma.StringNullableFilter<"Staff"> | string | null
   dutyEndTime?: Prisma.StringNullableFilter<"Staff"> | string | null
@@ -262,7 +262,7 @@ export type StaffWhereInput = {
   userId?: Prisma.StringFilter<"Staff"> | string
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
-  staffPermissions?: Prisma.StaffPermissionListRelationFilter
+  staffType?: Prisma.XOR<Prisma.StaffTypeScalarRelationFilter, Prisma.StaffTypeWhereInput>
   station?: Prisma.XOR<Prisma.StationScalarRelationFilter, Prisma.StationWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -270,9 +270,9 @@ export type StaffWhereInput = {
 export type StaffOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  staffTypeId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   avatar?: Prisma.SortOrderInput | Prisma.SortOrder
-  staffType?: Prisma.SortOrder
   shift?: Prisma.SortOrder
   dutyStartTime?: Prisma.SortOrderInput | Prisma.SortOrder
   dutyEndTime?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -283,7 +283,7 @@ export type StaffOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  staffPermissions?: Prisma.StaffPermissionOrderByRelationAggregateInput
+  staffType?: Prisma.StaffTypeOrderByWithRelationInput
   station?: Prisma.StationOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -295,9 +295,9 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.StaffWhereInput | Prisma.StaffWhereInput[]
   OR?: Prisma.StaffWhereInput[]
   NOT?: Prisma.StaffWhereInput | Prisma.StaffWhereInput[]
+  staffTypeId?: Prisma.StringFilter<"Staff"> | string
   name?: Prisma.StringFilter<"Staff"> | string
   avatar?: Prisma.StringNullableFilter<"Staff"> | string | null
-  staffType?: Prisma.EnumStaffTypeFilter<"Staff"> | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFilter<"Staff"> | $Enums.ShiftType
   dutyStartTime?: Prisma.StringNullableFilter<"Staff"> | string | null
   dutyEndTime?: Prisma.StringNullableFilter<"Staff"> | string | null
@@ -307,7 +307,7 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   stationId?: Prisma.StringFilter<"Staff"> | string
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
-  staffPermissions?: Prisma.StaffPermissionListRelationFilter
+  staffType?: Prisma.XOR<Prisma.StaffTypeScalarRelationFilter, Prisma.StaffTypeWhereInput>
   station?: Prisma.XOR<Prisma.StationScalarRelationFilter, Prisma.StationWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "staffId" | "userId">
@@ -315,9 +315,9 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
 export type StaffOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  staffTypeId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   avatar?: Prisma.SortOrderInput | Prisma.SortOrder
-  staffType?: Prisma.SortOrder
   shift?: Prisma.SortOrder
   dutyStartTime?: Prisma.SortOrderInput | Prisma.SortOrder
   dutyEndTime?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -339,9 +339,9 @@ export type StaffScalarWhereWithAggregatesInput = {
   NOT?: Prisma.StaffScalarWhereWithAggregatesInput | Prisma.StaffScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   staffId?: Prisma.StringWithAggregatesFilter<"Staff"> | string
+  staffTypeId?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   name?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   avatar?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
-  staffType?: Prisma.EnumStaffTypeWithAggregatesFilter<"Staff"> | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeWithAggregatesFilter<"Staff"> | $Enums.ShiftType
   dutyStartTime?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
   dutyEndTime?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
@@ -359,7 +359,6 @@ export type StaffCreateInput = {
   staffId: string
   name: string
   avatar?: string | null
-  staffType: $Enums.StaffType
   shift?: $Enums.ShiftType
   dutyStartTime?: string | null
   dutyEndTime?: string | null
@@ -368,7 +367,7 @@ export type StaffCreateInput = {
   joiningDate?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  staffPermissions?: Prisma.StaffPermissionCreateNestedManyWithoutStaffInput
+  staffType: Prisma.StaffTypeCreateNestedOneWithoutStaffsInput
   station: Prisma.StationCreateNestedOneWithoutStaffsInput
   user: Prisma.UserCreateNestedOneWithoutStaffInput
 }
@@ -376,9 +375,9 @@ export type StaffCreateInput = {
 export type StaffUncheckedCreateInput = {
   id?: string
   staffId: string
+  staffTypeId: string
   name: string
   avatar?: string | null
-  staffType: $Enums.StaffType
   shift?: $Enums.ShiftType
   dutyStartTime?: string | null
   dutyEndTime?: string | null
@@ -389,7 +388,6 @@ export type StaffUncheckedCreateInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  staffPermissions?: Prisma.StaffPermissionUncheckedCreateNestedManyWithoutStaffInput
 }
 
 export type StaffUpdateInput = {
@@ -397,7 +395,6 @@ export type StaffUpdateInput = {
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
   dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -406,7 +403,7 @@ export type StaffUpdateInput = {
   joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  staffPermissions?: Prisma.StaffPermissionUpdateManyWithoutStaffNestedInput
+  staffType?: Prisma.StaffTypeUpdateOneRequiredWithoutStaffsNestedInput
   station?: Prisma.StationUpdateOneRequiredWithoutStaffsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
 }
@@ -414,9 +411,9 @@ export type StaffUpdateInput = {
 export type StaffUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  staffTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
   dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -427,15 +424,14 @@ export type StaffUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  staffPermissions?: Prisma.StaffPermissionUncheckedUpdateManyWithoutStaffNestedInput
 }
 
 export type StaffCreateManyInput = {
   id?: string
   staffId: string
+  staffTypeId: string
   name: string
   avatar?: string | null
-  staffType: $Enums.StaffType
   shift?: $Enums.ShiftType
   dutyStartTime?: string | null
   dutyEndTime?: string | null
@@ -453,7 +449,6 @@ export type StaffUpdateManyMutationInput = {
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
   dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -467,9 +462,9 @@ export type StaffUpdateManyMutationInput = {
 export type StaffUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  staffTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
   dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -480,11 +475,6 @@ export type StaffUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type StaffScalarRelationFilter = {
-  is?: Prisma.StaffWhereInput
-  isNot?: Prisma.StaffWhereInput
 }
 
 export type StaffNullableScalarRelationFilter = {
@@ -505,9 +495,9 @@ export type StaffOrderByRelationAggregateInput = {
 export type StaffCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  staffTypeId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
-  staffType?: Prisma.SortOrder
   shift?: Prisma.SortOrder
   dutyStartTime?: Prisma.SortOrder
   dutyEndTime?: Prisma.SortOrder
@@ -523,9 +513,9 @@ export type StaffCountOrderByAggregateInput = {
 export type StaffMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  staffTypeId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
-  staffType?: Prisma.SortOrder
   shift?: Prisma.SortOrder
   dutyStartTime?: Prisma.SortOrder
   dutyEndTime?: Prisma.SortOrder
@@ -541,9 +531,9 @@ export type StaffMaxOrderByAggregateInput = {
 export type StaffMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  staffTypeId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
-  staffType?: Prisma.SortOrder
   shift?: Prisma.SortOrder
   dutyStartTime?: Prisma.SortOrder
   dutyEndTime?: Prisma.SortOrder
@@ -554,20 +544,6 @@ export type StaffMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type StaffCreateNestedOneWithoutStaffPermissionsInput = {
-  create?: Prisma.XOR<Prisma.StaffCreateWithoutStaffPermissionsInput, Prisma.StaffUncheckedCreateWithoutStaffPermissionsInput>
-  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutStaffPermissionsInput
-  connect?: Prisma.StaffWhereUniqueInput
-}
-
-export type StaffUpdateOneRequiredWithoutStaffPermissionsNestedInput = {
-  create?: Prisma.XOR<Prisma.StaffCreateWithoutStaffPermissionsInput, Prisma.StaffUncheckedCreateWithoutStaffPermissionsInput>
-  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutStaffPermissionsInput
-  upsert?: Prisma.StaffUpsertWithoutStaffPermissionsInput
-  connect?: Prisma.StaffWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.StaffUpdateToOneWithWhereWithoutStaffPermissionsInput, Prisma.StaffUpdateWithoutStaffPermissionsInput>, Prisma.StaffUncheckedUpdateWithoutStaffPermissionsInput>
 }
 
 export type StaffCreateNestedOneWithoutUserInput = {
@@ -644,8 +620,46 @@ export type StaffUncheckedUpdateManyWithoutStationNestedInput = {
   deleteMany?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
 }
 
-export type EnumStaffTypeFieldUpdateOperationsInput = {
-  set?: $Enums.StaffType
+export type StaffCreateNestedManyWithoutStaffTypeInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutStaffTypeInput, Prisma.StaffUncheckedCreateWithoutStaffTypeInput> | Prisma.StaffCreateWithoutStaffTypeInput[] | Prisma.StaffUncheckedCreateWithoutStaffTypeInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutStaffTypeInput | Prisma.StaffCreateOrConnectWithoutStaffTypeInput[]
+  createMany?: Prisma.StaffCreateManyStaffTypeInputEnvelope
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+}
+
+export type StaffUncheckedCreateNestedManyWithoutStaffTypeInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutStaffTypeInput, Prisma.StaffUncheckedCreateWithoutStaffTypeInput> | Prisma.StaffCreateWithoutStaffTypeInput[] | Prisma.StaffUncheckedCreateWithoutStaffTypeInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutStaffTypeInput | Prisma.StaffCreateOrConnectWithoutStaffTypeInput[]
+  createMany?: Prisma.StaffCreateManyStaffTypeInputEnvelope
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+}
+
+export type StaffUpdateManyWithoutStaffTypeNestedInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutStaffTypeInput, Prisma.StaffUncheckedCreateWithoutStaffTypeInput> | Prisma.StaffCreateWithoutStaffTypeInput[] | Prisma.StaffUncheckedCreateWithoutStaffTypeInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutStaffTypeInput | Prisma.StaffCreateOrConnectWithoutStaffTypeInput[]
+  upsert?: Prisma.StaffUpsertWithWhereUniqueWithoutStaffTypeInput | Prisma.StaffUpsertWithWhereUniqueWithoutStaffTypeInput[]
+  createMany?: Prisma.StaffCreateManyStaffTypeInputEnvelope
+  set?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  disconnect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  delete?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  update?: Prisma.StaffUpdateWithWhereUniqueWithoutStaffTypeInput | Prisma.StaffUpdateWithWhereUniqueWithoutStaffTypeInput[]
+  updateMany?: Prisma.StaffUpdateManyWithWhereWithoutStaffTypeInput | Prisma.StaffUpdateManyWithWhereWithoutStaffTypeInput[]
+  deleteMany?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
+}
+
+export type StaffUncheckedUpdateManyWithoutStaffTypeNestedInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutStaffTypeInput, Prisma.StaffUncheckedCreateWithoutStaffTypeInput> | Prisma.StaffCreateWithoutStaffTypeInput[] | Prisma.StaffUncheckedCreateWithoutStaffTypeInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutStaffTypeInput | Prisma.StaffCreateOrConnectWithoutStaffTypeInput[]
+  upsert?: Prisma.StaffUpsertWithWhereUniqueWithoutStaffTypeInput | Prisma.StaffUpsertWithWhereUniqueWithoutStaffTypeInput[]
+  createMany?: Prisma.StaffCreateManyStaffTypeInputEnvelope
+  set?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  disconnect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  delete?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  update?: Prisma.StaffUpdateWithWhereUniqueWithoutStaffTypeInput | Prisma.StaffUpdateWithWhereUniqueWithoutStaffTypeInput[]
+  updateMany?: Prisma.StaffUpdateManyWithWhereWithoutStaffTypeInput | Prisma.StaffUpdateManyWithWhereWithoutStaffTypeInput[]
+  deleteMany?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
 }
 
 export type EnumShiftTypeFieldUpdateOperationsInput = {
@@ -656,100 +670,11 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
-export type StaffCreateWithoutStaffPermissionsInput = {
-  id?: string
-  staffId: string
-  name: string
-  avatar?: string | null
-  staffType: $Enums.StaffType
-  shift?: $Enums.ShiftType
-  dutyStartTime?: string | null
-  dutyEndTime?: string | null
-  resignationDate?: Date | string | null
-  address?: string | null
-  joiningDate?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  station: Prisma.StationCreateNestedOneWithoutStaffsInput
-  user: Prisma.UserCreateNestedOneWithoutStaffInput
-}
-
-export type StaffUncheckedCreateWithoutStaffPermissionsInput = {
-  id?: string
-  staffId: string
-  name: string
-  avatar?: string | null
-  staffType: $Enums.StaffType
-  shift?: $Enums.ShiftType
-  dutyStartTime?: string | null
-  dutyEndTime?: string | null
-  resignationDate?: Date | string | null
-  address?: string | null
-  joiningDate?: Date | string
-  stationId: string
-  userId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type StaffCreateOrConnectWithoutStaffPermissionsInput = {
-  where: Prisma.StaffWhereUniqueInput
-  create: Prisma.XOR<Prisma.StaffCreateWithoutStaffPermissionsInput, Prisma.StaffUncheckedCreateWithoutStaffPermissionsInput>
-}
-
-export type StaffUpsertWithoutStaffPermissionsInput = {
-  update: Prisma.XOR<Prisma.StaffUpdateWithoutStaffPermissionsInput, Prisma.StaffUncheckedUpdateWithoutStaffPermissionsInput>
-  create: Prisma.XOR<Prisma.StaffCreateWithoutStaffPermissionsInput, Prisma.StaffUncheckedCreateWithoutStaffPermissionsInput>
-  where?: Prisma.StaffWhereInput
-}
-
-export type StaffUpdateToOneWithWhereWithoutStaffPermissionsInput = {
-  where?: Prisma.StaffWhereInput
-  data: Prisma.XOR<Prisma.StaffUpdateWithoutStaffPermissionsInput, Prisma.StaffUncheckedUpdateWithoutStaffPermissionsInput>
-}
-
-export type StaffUpdateWithoutStaffPermissionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  staffId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
-  shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
-  dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resignationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  station?: Prisma.StationUpdateOneRequiredWithoutStaffsNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
-}
-
-export type StaffUncheckedUpdateWithoutStaffPermissionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  staffId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
-  shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
-  dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resignationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  stationId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
 export type StaffCreateWithoutUserInput = {
   id?: string
   staffId: string
   name: string
   avatar?: string | null
-  staffType: $Enums.StaffType
   shift?: $Enums.ShiftType
   dutyStartTime?: string | null
   dutyEndTime?: string | null
@@ -758,16 +683,16 @@ export type StaffCreateWithoutUserInput = {
   joiningDate?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  staffPermissions?: Prisma.StaffPermissionCreateNestedManyWithoutStaffInput
+  staffType: Prisma.StaffTypeCreateNestedOneWithoutStaffsInput
   station: Prisma.StationCreateNestedOneWithoutStaffsInput
 }
 
 export type StaffUncheckedCreateWithoutUserInput = {
   id?: string
   staffId: string
+  staffTypeId: string
   name: string
   avatar?: string | null
-  staffType: $Enums.StaffType
   shift?: $Enums.ShiftType
   dutyStartTime?: string | null
   dutyEndTime?: string | null
@@ -777,7 +702,6 @@ export type StaffUncheckedCreateWithoutUserInput = {
   stationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  staffPermissions?: Prisma.StaffPermissionUncheckedCreateNestedManyWithoutStaffInput
 }
 
 export type StaffCreateOrConnectWithoutUserInput = {
@@ -801,7 +725,6 @@ export type StaffUpdateWithoutUserInput = {
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
   dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -810,16 +733,16 @@ export type StaffUpdateWithoutUserInput = {
   joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  staffPermissions?: Prisma.StaffPermissionUpdateManyWithoutStaffNestedInput
+  staffType?: Prisma.StaffTypeUpdateOneRequiredWithoutStaffsNestedInput
   station?: Prisma.StationUpdateOneRequiredWithoutStaffsNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  staffTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
   dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -829,7 +752,6 @@ export type StaffUncheckedUpdateWithoutUserInput = {
   stationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  staffPermissions?: Prisma.StaffPermissionUncheckedUpdateManyWithoutStaffNestedInput
 }
 
 export type StaffCreateWithoutStationInput = {
@@ -837,7 +759,6 @@ export type StaffCreateWithoutStationInput = {
   staffId: string
   name: string
   avatar?: string | null
-  staffType: $Enums.StaffType
   shift?: $Enums.ShiftType
   dutyStartTime?: string | null
   dutyEndTime?: string | null
@@ -846,16 +767,16 @@ export type StaffCreateWithoutStationInput = {
   joiningDate?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  staffPermissions?: Prisma.StaffPermissionCreateNestedManyWithoutStaffInput
+  staffType: Prisma.StaffTypeCreateNestedOneWithoutStaffsInput
   user: Prisma.UserCreateNestedOneWithoutStaffInput
 }
 
 export type StaffUncheckedCreateWithoutStationInput = {
   id?: string
   staffId: string
+  staffTypeId: string
   name: string
   avatar?: string | null
-  staffType: $Enums.StaffType
   shift?: $Enums.ShiftType
   dutyStartTime?: string | null
   dutyEndTime?: string | null
@@ -865,7 +786,6 @@ export type StaffUncheckedCreateWithoutStationInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  staffPermissions?: Prisma.StaffPermissionUncheckedCreateNestedManyWithoutStaffInput
 }
 
 export type StaffCreateOrConnectWithoutStationInput = {
@@ -900,9 +820,9 @@ export type StaffScalarWhereInput = {
   NOT?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
   id?: Prisma.StringFilter<"Staff"> | string
   staffId?: Prisma.StringFilter<"Staff"> | string
+  staffTypeId?: Prisma.StringFilter<"Staff"> | string
   name?: Prisma.StringFilter<"Staff"> | string
   avatar?: Prisma.StringNullableFilter<"Staff"> | string | null
-  staffType?: Prisma.EnumStaffTypeFilter<"Staff"> | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFilter<"Staff"> | $Enums.ShiftType
   dutyStartTime?: Prisma.StringNullableFilter<"Staff"> | string | null
   dutyEndTime?: Prisma.StringNullableFilter<"Staff"> | string | null
@@ -915,12 +835,72 @@ export type StaffScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
 }
 
-export type StaffCreateManyStationInput = {
+export type StaffCreateWithoutStaffTypeInput = {
   id?: string
   staffId: string
   name: string
   avatar?: string | null
-  staffType: $Enums.StaffType
+  shift?: $Enums.ShiftType
+  dutyStartTime?: string | null
+  dutyEndTime?: string | null
+  resignationDate?: Date | string | null
+  address?: string | null
+  joiningDate?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  station: Prisma.StationCreateNestedOneWithoutStaffsInput
+  user: Prisma.UserCreateNestedOneWithoutStaffInput
+}
+
+export type StaffUncheckedCreateWithoutStaffTypeInput = {
+  id?: string
+  staffId: string
+  name: string
+  avatar?: string | null
+  shift?: $Enums.ShiftType
+  dutyStartTime?: string | null
+  dutyEndTime?: string | null
+  resignationDate?: Date | string | null
+  address?: string | null
+  joiningDate?: Date | string
+  stationId: string
+  userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type StaffCreateOrConnectWithoutStaffTypeInput = {
+  where: Prisma.StaffWhereUniqueInput
+  create: Prisma.XOR<Prisma.StaffCreateWithoutStaffTypeInput, Prisma.StaffUncheckedCreateWithoutStaffTypeInput>
+}
+
+export type StaffCreateManyStaffTypeInputEnvelope = {
+  data: Prisma.StaffCreateManyStaffTypeInput | Prisma.StaffCreateManyStaffTypeInput[]
+  skipDuplicates?: boolean
+}
+
+export type StaffUpsertWithWhereUniqueWithoutStaffTypeInput = {
+  where: Prisma.StaffWhereUniqueInput
+  update: Prisma.XOR<Prisma.StaffUpdateWithoutStaffTypeInput, Prisma.StaffUncheckedUpdateWithoutStaffTypeInput>
+  create: Prisma.XOR<Prisma.StaffCreateWithoutStaffTypeInput, Prisma.StaffUncheckedCreateWithoutStaffTypeInput>
+}
+
+export type StaffUpdateWithWhereUniqueWithoutStaffTypeInput = {
+  where: Prisma.StaffWhereUniqueInput
+  data: Prisma.XOR<Prisma.StaffUpdateWithoutStaffTypeInput, Prisma.StaffUncheckedUpdateWithoutStaffTypeInput>
+}
+
+export type StaffUpdateManyWithWhereWithoutStaffTypeInput = {
+  where: Prisma.StaffScalarWhereInput
+  data: Prisma.XOR<Prisma.StaffUpdateManyMutationInput, Prisma.StaffUncheckedUpdateManyWithoutStaffTypeInput>
+}
+
+export type StaffCreateManyStationInput = {
+  id?: string
+  staffId: string
+  staffTypeId: string
+  name: string
+  avatar?: string | null
   shift?: $Enums.ShiftType
   dutyStartTime?: string | null
   dutyEndTime?: string | null
@@ -937,7 +917,6 @@ export type StaffUpdateWithoutStationInput = {
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
   dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -946,16 +925,16 @@ export type StaffUpdateWithoutStationInput = {
   joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  staffPermissions?: Prisma.StaffPermissionUpdateManyWithoutStaffNestedInput
+  staffType?: Prisma.StaffTypeUpdateOneRequiredWithoutStaffsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutStationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  staffTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
   dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -965,15 +944,14 @@ export type StaffUncheckedUpdateWithoutStationInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  staffPermissions?: Prisma.StaffPermissionUncheckedUpdateManyWithoutStaffNestedInput
 }
 
 export type StaffUncheckedUpdateManyWithoutStationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  staffTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  staffType?: Prisma.EnumStaffTypeFieldUpdateOperationsInput | $Enums.StaffType
   shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
   dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -985,43 +963,82 @@ export type StaffUncheckedUpdateManyWithoutStationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-
-/**
- * Count Type StaffCountOutputType
- */
-
-export type StaffCountOutputType = {
-  staffPermissions: number
+export type StaffCreateManyStaffTypeInput = {
+  id?: string
+  staffId: string
+  name: string
+  avatar?: string | null
+  shift?: $Enums.ShiftType
+  dutyStartTime?: string | null
+  dutyEndTime?: string | null
+  resignationDate?: Date | string | null
+  address?: string | null
+  joiningDate?: Date | string
+  stationId: string
+  userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
-export type StaffCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  staffPermissions?: boolean | StaffCountOutputTypeCountStaffPermissionsArgs
+export type StaffUpdateWithoutStaffTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
+  dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resignationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  station?: Prisma.StationUpdateOneRequiredWithoutStaffsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
 }
 
-/**
- * StaffCountOutputType without action
- */
-export type StaffCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StaffCountOutputType
-   */
-  select?: Prisma.StaffCountOutputTypeSelect<ExtArgs> | null
+export type StaffUncheckedUpdateWithoutStaffTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
+  dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resignationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-/**
- * StaffCountOutputType without action
- */
-export type StaffCountOutputTypeCountStaffPermissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StaffPermissionWhereInput
+export type StaffUncheckedUpdateManyWithoutStaffTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shift?: Prisma.EnumShiftTypeFieldUpdateOperationsInput | $Enums.ShiftType
+  dutyStartTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dutyEndTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resignationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
+
 
 
 export type StaffSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   staffId?: boolean
+  staffTypeId?: boolean
   name?: boolean
   avatar?: boolean
-  staffType?: boolean
   shift?: boolean
   dutyStartTime?: boolean
   dutyEndTime?: boolean
@@ -1032,18 +1049,17 @@ export type StaffSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  staffPermissions?: boolean | Prisma.Staff$staffPermissionsArgs<ExtArgs>
+  staffType?: boolean | Prisma.StaffTypeDefaultArgs<ExtArgs>
   station?: boolean | Prisma.StationDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.StaffCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["staff"]>
 
 export type StaffSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   staffId?: boolean
+  staffTypeId?: boolean
   name?: boolean
   avatar?: boolean
-  staffType?: boolean
   shift?: boolean
   dutyStartTime?: boolean
   dutyEndTime?: boolean
@@ -1054,6 +1070,7 @@ export type StaffSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  staffType?: boolean | Prisma.StaffTypeDefaultArgs<ExtArgs>
   station?: boolean | Prisma.StationDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["staff"]>
@@ -1061,9 +1078,9 @@ export type StaffSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type StaffSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   staffId?: boolean
+  staffTypeId?: boolean
   name?: boolean
   avatar?: boolean
-  staffType?: boolean
   shift?: boolean
   dutyStartTime?: boolean
   dutyEndTime?: boolean
@@ -1074,6 +1091,7 @@ export type StaffSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  staffType?: boolean | Prisma.StaffTypeDefaultArgs<ExtArgs>
   station?: boolean | Prisma.StationDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["staff"]>
@@ -1081,9 +1099,9 @@ export type StaffSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type StaffSelectScalar = {
   id?: boolean
   staffId?: boolean
+  staffTypeId?: boolean
   name?: boolean
   avatar?: boolean
-  staffType?: boolean
   shift?: boolean
   dutyStartTime?: boolean
   dutyEndTime?: boolean
@@ -1096,18 +1114,19 @@ export type StaffSelectScalar = {
   updatedAt?: boolean
 }
 
-export type StaffOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "staffId" | "name" | "avatar" | "staffType" | "shift" | "dutyStartTime" | "dutyEndTime" | "resignationDate" | "address" | "joiningDate" | "stationId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
+export type StaffOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "staffId" | "staffTypeId" | "name" | "avatar" | "shift" | "dutyStartTime" | "dutyEndTime" | "resignationDate" | "address" | "joiningDate" | "stationId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
 export type StaffInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  staffPermissions?: boolean | Prisma.Staff$staffPermissionsArgs<ExtArgs>
+  staffType?: boolean | Prisma.StaffTypeDefaultArgs<ExtArgs>
   station?: boolean | Prisma.StationDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.StaffCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StaffIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  staffType?: boolean | Prisma.StaffTypeDefaultArgs<ExtArgs>
   station?: boolean | Prisma.StationDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type StaffIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  staffType?: boolean | Prisma.StaffTypeDefaultArgs<ExtArgs>
   station?: boolean | Prisma.StationDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -1115,16 +1134,16 @@ export type StaffIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type $StaffPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Staff"
   objects: {
-    staffPermissions: Prisma.$StaffPermissionPayload<ExtArgs>[]
+    staffType: Prisma.$StaffTypePayload<ExtArgs>
     station: Prisma.$StationPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     staffId: string
+    staffTypeId: string
     name: string
     avatar: string | null
-    staffType: $Enums.StaffType
     shift: $Enums.ShiftType
     dutyStartTime: string | null
     dutyEndTime: string | null
@@ -1529,7 +1548,7 @@ readonly fields: StaffFieldRefs;
  */
 export interface Prisma__StaffClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  staffPermissions<T extends Prisma.Staff$staffPermissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Staff$staffPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  staffType<T extends Prisma.StaffTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StaffTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__StaffTypeClient<runtime.Types.Result.GetResult<Prisma.$StaffTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   station<T extends Prisma.StationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StationDefaultArgs<ExtArgs>>): Prisma.Prisma__StationClient<runtime.Types.Result.GetResult<Prisma.$StationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1563,9 +1582,9 @@ export interface Prisma__StaffClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface StaffFieldRefs {
   readonly id: Prisma.FieldRef<"Staff", 'String'>
   readonly staffId: Prisma.FieldRef<"Staff", 'String'>
+  readonly staffTypeId: Prisma.FieldRef<"Staff", 'String'>
   readonly name: Prisma.FieldRef<"Staff", 'String'>
   readonly avatar: Prisma.FieldRef<"Staff", 'String'>
-  readonly staffType: Prisma.FieldRef<"Staff", 'StaffType'>
   readonly shift: Prisma.FieldRef<"Staff", 'ShiftType'>
   readonly dutyStartTime: Prisma.FieldRef<"Staff", 'String'>
   readonly dutyEndTime: Prisma.FieldRef<"Staff", 'String'>
@@ -1974,30 +1993,6 @@ export type StaffDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Staff to delete.
    */
   limit?: number
-}
-
-/**
- * Staff.staffPermissions
- */
-export type Staff$staffPermissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StaffPermission
-   */
-  select?: Prisma.StaffPermissionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the StaffPermission
-   */
-  omit?: Prisma.StaffPermissionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StaffPermissionInclude<ExtArgs> | null
-  where?: Prisma.StaffPermissionWhereInput
-  orderBy?: Prisma.StaffPermissionOrderByWithRelationInput | Prisma.StaffPermissionOrderByWithRelationInput[]
-  cursor?: Prisma.StaffPermissionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StaffPermissionScalarFieldEnum | Prisma.StaffPermissionScalarFieldEnum[]
 }
 
 /**

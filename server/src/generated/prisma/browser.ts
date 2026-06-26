@@ -48,6 +48,11 @@ export type Station = Prisma.StationModel
  */
 export type Platform = Prisma.PlatformModel
 /**
+ * Model StaffType
+ * 
+ */
+export type StaffType = Prisma.StaffTypeModel
+/**
  * Model Staff
  * 
  */
