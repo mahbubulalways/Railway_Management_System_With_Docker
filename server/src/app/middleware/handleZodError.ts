@@ -13,7 +13,7 @@ export const handleZodError = (err: ZodError): IErrorResponse => {
 
   return {
     statusCode: StatusCodes.BAD_REQUEST,
-    message: "Opps! Zod validation error!!",
+    message: "ZOD_ERROR",
     errorSources: errorSources,
   };
 };

@@ -5,6 +5,8 @@ import { AppError } from "../../error/AppError";
 import { createMetaConfig } from "../../../utils/createMetaConfig";
 import redisClient from "../../../redis";
 import { TQuery } from "../../../interface/query";
+import { paginationHelper } from "../../../helper/paginationHelper";
+import { modifySearch } from "../../../utils/modifySearch";
 
 // CREATE PERMISSION INTO DB
 const CreatePermissionService = async (payload: Permission) => {
@@ -57,24 +59,24 @@ const CreatePermissionService = async (payload: Permission) => {
 
 // GET ROLE FROM DB
 const GetPermissionsService = async (query: TQuery) => {
-  const limit = query?.limit as number;
-  const page = query?.page as number;
+  const { limit, page, skip } = paginationHelper(query.page, query.limit);
+  const where = modifySearch({ search: query.search, fields: ["name"] });
 
-  const skip = (page - 1) * limit;
-  const redisData = await redisClient.get("permission");
+  // const redisData = await redisClient.get("permission");
 
-  if (redisData) {
-    await redisClient.flushAll();
-    // return JSON.parse(redisData);
-  }
+  // if (redisData) {
+  //   await redisClient.flushAll();
+  //   // return JSON.parse(redisData);
+  // }
 
   const result = await prisma.permission.findMany({
+    where,
     skip,
     take: limit,
     orderBy: { createdAt: "asc" },
   });
 
-  const totalData = await prisma.permission.count();
+  const totalData = await prisma.permission.count({ where });
   const meta = createMetaConfig({
     limit,
     page,
@@ -94,15 +96,14 @@ const GetPermissionsService = async (query: TQuery) => {
 const GetAllPermissionsForStaffTypeService = async () => {
   const redisData = await redisClient.get("permission");
   if (redisData) {
-    await redisClient.flushAll();
-    // return JSON.parse(redisData);
+    return JSON.parse(redisData);
   }
 
   const result = await prisma.permission.findMany({
     select: { permission: true, id: true },
     orderBy: { createdAt: "asc" },
   });
-  // await redisClient.set("permission", JSON.stringify(data));
+  await redisClient.set("permission", JSON.stringify(result));
   return result;
 };
 

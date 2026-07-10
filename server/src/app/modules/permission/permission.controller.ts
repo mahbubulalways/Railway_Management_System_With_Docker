@@ -3,6 +3,7 @@ import catchAsync from "../../../utils/catchAsync";
 import sendResponse from "../../../utils/sendResponse";
 import { AppError } from "../../error/AppError";
 import { PermissionService } from "./permission.service";
+import { parseListQuery } from "../../../utils/parseListQuery";
 
 // CREATE PERMISSION INTO DB
 const CreatePermissionController = catchAsync(async (req, res) => {
@@ -25,10 +26,13 @@ const CreatePermissionController = catchAsync(async (req, res) => {
 
 // GET PERMISSION FROM DB
 const GetPermissionsController = catchAsync(async (req, res) => {
-  const page = Number(req.query.page) ?? 1;
-  const limit = Number(req.query.limit) ?? 10;
+  const { limit, page, search } = await parseListQuery(req.query);
 
-  const result = await PermissionService.GetPermissionsService({ page, limit });
+  const result = await PermissionService.GetPermissionsService({
+    page,
+    limit,
+    search,
+  });
   if (!result.data.length) {
     sendResponse(res, {
       message: "Opps! No permission found.",

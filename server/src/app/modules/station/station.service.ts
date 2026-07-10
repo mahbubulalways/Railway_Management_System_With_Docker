@@ -6,6 +6,8 @@ import { separateStationInfo } from "./station.utils";
 import { Prisma } from "../../../generated/prisma/client";
 import { createMetaConfig } from "../../../utils/createMetaConfig";
 import { paginationHelper } from "../../../helper/paginationHelper";
+import { TQuery } from "../../../interface/query";
+import { modifySearch } from "../../../utils/modifySearch";
 
 // CREATE MULTIPLE STATION INTO DB
 // const CreateMultipleStationService = async (
@@ -136,23 +138,39 @@ const GetOwnStationPermissionServicePrivate = async (userId: string) => {
 // ==================== PUBLIC ROUTE ======================
 
 // CREATE STATION FROM DB (PUBLIC ROUTE)
-const GetStationServicePublic = async (query: IQuery) => {
-  const pagination = paginationHelper(
-    Number(query.page) | 1,
-    Number(query.limit) | 12,
-  );
+const GetStationServicePublic = async (query: TQuery) => {
+  const pagination = paginationHelper(query.page, query.limit);
+  const where = modifySearch({
+    search: query.search,
+    stringFields: [
+      "stationId",
+      "name",
+      "division",
+      "district",
+      "status",
+      "type",
+    ],
+  });
 
   const [result, total] = await prisma.$transaction([
     prisma.station.findMany({
-      include: {
-        platforms: true,
+      where,
+      select: {
+        name: true,
+        district: true,
+        division: true,
+        type: true,
+        id: true,
+        stationId: true,
+        status: true,
+        established: true,
       },
       skip: pagination.skip,
       take: pagination.limit,
       orderBy: { createdAt: "asc" },
     }),
 
-    prisma.station.count(),
+    prisma.station.count({ where }),
   ]);
 
   const meta = createMetaConfig({
@@ -176,10 +194,23 @@ const GetSingleStationServicePublic = async (stationId: string) => {
   return result;
 };
 
+// GET STATIONS OPTIONS
+const GetStationOptionsService = async () => {
+  const result = await prisma.station.findMany({
+    select: {
+      id: true,
+      name: true,
+      stationId: true,
+      platforms: { select: { name: true, id: true } },
+    },
+  });
+  return result;
+};
 export const StationService = {
   CreateStationServicePrivate,
   GetStationServicePublic,
   GetSingleStationServicePublic,
   CreateMultipleStationService,
   GetOwnStationPermissionServicePrivate,
+  GetStationOptionsService,
 };

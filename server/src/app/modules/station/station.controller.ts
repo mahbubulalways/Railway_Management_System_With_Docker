@@ -4,6 +4,7 @@ import { AppError } from "../../error/AppError";
 import sendResponse from "../../../utils/sendResponse";
 import { StationService } from "./station.service";
 import { IQuery } from "./station.interface";
+import { parseListQuery } from "../../../utils/parseListQuery";
 
 // ====================== PRIVATE ROUTE ========================
 
@@ -75,8 +76,12 @@ const GetOwnStationPermissionControllerPrivate = catchAsync(
 
 // GET ALL STATIONS (PUBLIC ROUTE)
 const GetStationsControllerPublic = catchAsync(async (req, res) => {
-  const query = { ...req.query } as IQuery;
-  const result = await StationService.GetStationServicePublic(query);
+  const { limit, page, search } = await parseListQuery(req.query);
+  const result = await StationService.GetStationServicePublic({
+    limit,
+    page,
+    search,
+  });
   if (!result.data.length) {
     sendResponse(res, {
       message: "Opps! No station found.",
@@ -114,10 +119,31 @@ const GetSingleStationControllerPublic = catchAsync(async (req, res) => {
   }
 });
 
+const GetStationOptionsControllerPublic = catchAsync(async (req, res) => {
+  const id = req.params.id as string;
+  const result = await StationService.GetStationOptionsService();
+  if (!result) {
+    sendResponse(res, {
+      message: "Opps! No station found.",
+      statusCode: StatusCodes.OK,
+      success: true,
+      data: [],
+    });
+  } else {
+    sendResponse(res, {
+      message: "Station retrieved successfully",
+      statusCode: StatusCodes.OK,
+      success: true,
+      data: result,
+    });
+  }
+});
+
 export const StationController = {
   CreateStationController,
   GetStationsControllerPublic,
   GetSingleStationControllerPublic,
   CreateMultipleStationController,
   GetOwnStationPermissionControllerPrivate,
+  GetStationOptionsControllerPublic,
 };

@@ -57,6 +57,16 @@ export const ModelName = {
   Admin: 'Admin',
   Station: 'Station',
   Platform: 'Platform',
+  Train: 'Train',
+  CoachModel: 'CoachModel',
+  CoachModelSeat: 'CoachModelSeat',
+  Coach: 'Coach',
+  Seat: 'Seat',
+  TrainCoach: 'TrainCoach',
+  Route: 'Route',
+  RouteStation: 'RouteStation',
+  Schedule: 'Schedule',
+  TripInstance: 'TripInstance',
   StaffType: 'StaffType',
   Staff: 'Staff'
 } as const
@@ -137,7 +147,7 @@ export const StationScalarFieldEnum = {
   district: 'district',
   name: 'name',
   status: 'status',
-  establishedYear: 'establishedYear',
+  established: 'established',
   notes: 'notes',
   ticketCounter: 'ticketCounter',
   onlineTicketSupport: 'onlineTicketSupport',
@@ -175,6 +185,156 @@ export const PlatformScalarFieldEnum = {
 } as const
 
 export type PlatformScalarFieldEnum = (typeof PlatformScalarFieldEnum)[keyof typeof PlatformScalarFieldEnum]
+
+
+export const TrainScalarFieldEnum = {
+  id: 'id',
+  trainId: 'trainId',
+  name: 'name',
+  type: 'type',
+  status: 'status',
+  maxSpeed: 'maxSpeed',
+  manufactureYear: 'manufactureYear',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TrainScalarFieldEnum = (typeof TrainScalarFieldEnum)[keyof typeof TrainScalarFieldEnum]
+
+
+export const CoachModelScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  layoutType: 'layoutType',
+  description: 'description',
+  totalSeats: 'totalSeats',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CoachModelScalarFieldEnum = (typeof CoachModelScalarFieldEnum)[keyof typeof CoachModelScalarFieldEnum]
+
+
+export const CoachModelSeatScalarFieldEnum = {
+  id: 'id',
+  coachModelId: 'coachModelId',
+  label: 'label',
+  row: 'row',
+  side: 'side',
+  position: 'position',
+  seatType: 'seatType',
+  createdAt: 'createdAt',
+  coachModelCabinId: 'coachModelCabinId'
+} as const
+
+export type CoachModelSeatScalarFieldEnum = (typeof CoachModelSeatScalarFieldEnum)[keyof typeof CoachModelSeatScalarFieldEnum]
+
+
+export const CoachScalarFieldEnum = {
+  id: 'id',
+  coachCode: 'coachCode',
+  coachNumber: 'coachNumber',
+  coachModelId: 'coachModelId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CoachScalarFieldEnum = (typeof CoachScalarFieldEnum)[keyof typeof CoachScalarFieldEnum]
+
+
+export const SeatScalarFieldEnum = {
+  id: 'id',
+  coachId: 'coachId',
+  label: 'label',
+  row: 'row',
+  side: 'side',
+  position: 'position',
+  seatType: 'seatType',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  cabinId: 'cabinId'
+} as const
+
+export type SeatScalarFieldEnum = (typeof SeatScalarFieldEnum)[keyof typeof SeatScalarFieldEnum]
+
+
+export const TrainCoachScalarFieldEnum = {
+  id: 'id',
+  trainId: 'trainId',
+  coachId: 'coachId',
+  sequence: 'sequence'
+} as const
+
+export type TrainCoachScalarFieldEnum = (typeof TrainCoachScalarFieldEnum)[keyof typeof TrainCoachScalarFieldEnum]
+
+
+export const RouteScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  sourceStationId: 'sourceStationId',
+  destinationStationId: 'destinationStationId',
+  distance: 'distance',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RouteScalarFieldEnum = (typeof RouteScalarFieldEnum)[keyof typeof RouteScalarFieldEnum]
+
+
+export const RouteStationScalarFieldEnum = {
+  id: 'id',
+  routeId: 'routeId',
+  stationId: 'stationId',
+  sequence: 'sequence',
+  distanceFromStart: 'distanceFromStart',
+  distanceFromPrevious: 'distanceFromPrevious',
+  travelTimeFromPrevious: 'travelTimeFromPrevious',
+  stopTime: 'stopTime',
+  isMajorStop: 'isMajorStop',
+  platform: 'platform',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RouteStationScalarFieldEnum = (typeof RouteStationScalarFieldEnum)[keyof typeof RouteStationScalarFieldEnum]
+
+
+export const ScheduleScalarFieldEnum = {
+  id: 'id',
+  trainId: 'trainId',
+  routeId: 'routeId',
+  direction: 'direction',
+  name: 'name',
+  startTime: 'startTime',
+  runningDays: 'runningDays',
+  bookingOpenDays: 'bookingOpenDays',
+  validFrom: 'validFrom',
+  validUntil: 'validUntil',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScheduleScalarFieldEnum = (typeof ScheduleScalarFieldEnum)[keyof typeof ScheduleScalarFieldEnum]
+
+
+export const TripInstanceScalarFieldEnum = {
+  id: 'id',
+  scheduleId: 'scheduleId',
+  journeyDate: 'journeyDate',
+  status: 'status',
+  remarks: 'remarks',
+  totalSeats: 'totalSeats',
+  availableSeats: 'availableSeats',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TripInstanceScalarFieldEnum = (typeof TripInstanceScalarFieldEnum)[keyof typeof TripInstanceScalarFieldEnum]
 
 
 export const StaffTypeScalarFieldEnum = {
@@ -216,6 +376,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -230,4 +397,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

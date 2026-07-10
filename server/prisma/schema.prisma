@@ -14,6 +14,8 @@ model Permission {
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   staffPermissions StaffPermission[]
+
+  @@map("permissions")
 }
 
 //============= ROLE PERMISSION INTERMIDIATE MODEL ============
@@ -27,6 +29,7 @@ model StaffPermission {
   staffTypeId  String?
 
   @@unique([staffTypeId, permissionId])
+  @@map("staff_permission")
 }
 
 //============= USER MODEL ============
@@ -56,6 +59,8 @@ model User {
   updatedAt  DateTime    @updatedAt
   admin      Admin?
   staff      Staff?
+
+  @@map("users")
 }
 
 //============= ADMIN MODEL ============//
@@ -68,40 +73,46 @@ model Admin {
   joiningDate DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@map("admins")
 }
 
 //================== STATION INFORMATION MODEL ================
 model Station {
-  id                    String     @id @default(uuid())
-  stationId             String     @unique
-  phone                 String     @unique
-  email                 String     @unique
+  id                    String         @id @default(uuid())
+  stationId             String         @unique
+  phone                 String         @unique
+  email                 String         @unique
   type                  String
   division              String
   district              String
   name                  String
-  status                String     @default("Active")
-  establishedYear       Int?
+  status                String         @default("Active")
+  established           DateTime
   notes                 String?
-  ticketCounter         Boolean    @default(false)
-  onlineTicketSupport   Boolean    @default(false)
-  foodCourt             Boolean    @default(false)
-  parking               Boolean    @default(false)
-  hasDisplayBoard       Boolean    @default(false)
-  hasAnnouncementSystem Boolean    @default(false)
-  wheelchairAccess      Boolean    @default(false)
-  wifi                  Boolean    @default(false)
-  washroom              Boolean    @default(false)
-  atm                   Boolean    @default(false)
-  securityService       Boolean    @default(false)
-  cctv                  Boolean    @default(false)
-  prayerRoom            Boolean    @default(false)
-  escalator             Boolean    @default(false)
-  lift                  Boolean    @default(false)
+  ticketCounter         Boolean        @default(false)
+  onlineTicketSupport   Boolean        @default(false)
+  foodCourt             Boolean        @default(false)
+  parking               Boolean        @default(false)
+  hasDisplayBoard       Boolean        @default(false)
+  hasAnnouncementSystem Boolean        @default(false)
+  wheelchairAccess      Boolean        @default(false)
+  wifi                  Boolean        @default(false)
+  washroom              Boolean        @default(false)
+  atm                   Boolean        @default(false)
+  securityService       Boolean        @default(false)
+  cctv                  Boolean        @default(false)
+  prayerRoom            Boolean        @default(false)
+  escalator             Boolean        @default(false)
+  lift                  Boolean        @default(false)
   platforms             Platform[]
-  createdAt             DateTime   @default(now())
-  updatedAt             DateTime   @updatedAt
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
   staffs                Staff[]
+  routeStations         RouteStation[]
+
+  sourceRoutes      Route[] @relation("RouteSource")
+  destinationRoutes Route[] @relation("RouteDestination")
 
   @@map("stations")
 }
@@ -121,6 +132,300 @@ model Platform {
   updatedAt DateTime @updatedAt
 
   @@map("platforms")
+}
+
+// ================ TRAIN MODEL ====================
+enum TrainType {
+  INTERCITY // আন্তঃনগর (দ্রুতগতির, সীমিত স্টপেজ, বেশি ভাড়া)
+  MAIL // মেইল ট্রেন (মাঝারি গতি, বেশি স্টপেজ)
+  EXPRESS // এক্সপ্রেস (দ্রুতগতির, কম স্টপেজ)
+  LOCAL // লোকাল (প্রতিটা স্টেশনে থামে, ধীরগতির, কম ভাড়া)
+  COMMUTER // কমিউটার (স্বল্প দূরত্বের নিয়মিত যাত্রী সার্ভিস)
+  SPECIAL // স্পেশাল (ঈদ স্পেশাল, পূজা স্পেশাল ইত্যাদি)
+  GOODS // মালবাহী ট্রেন
+}
+
+model Train {
+  id              String       @id @default(uuid())
+  trainId         String       @unique
+  name            String
+  type            TrainType
+  status          String
+  maxSpeed        Int?
+  manufactureYear Int?
+  notes           String?
+  coaches         TrainCoach[]
+  schedules       Schedule[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@map("trains")
+}
+
+// ========= COACH ==================
+enum CoachType {
+  AC_CHAIR
+  SHOVON_CHAIR
+  AC_CABIN
+  CABIN
+  SLEEPER
+}
+
+enum CoachLayoutType {
+  SEAT
+  CABIN
+}
+
+enum CabinType {
+  TWO
+  FOUR
+  SIX
+}
+
+enum SeatType {
+  WINDOW
+  AISLE
+  MIDDLE
+
+  LOWER
+  UPPER
+
+  SIDE_LOWER
+  SIDE_UPPER
+}
+
+enum SeatStatus {
+  AVAILABLE
+  BOOKED
+  BLOCKED
+}
+
+enum CoachStatus {
+  AVAILABLE
+  ASSIGNED
+  MAINTENANCE
+}
+
+// ======== COACH MODEL AND COACH SEAT MODEL (BLUE PRINT)========
+enum SeatSide {
+  LEFT
+  RIGHT
+}
+
+model CoachModel {
+  id         String          @id @default(uuid())
+  name       String          @unique
+  type       CoachType
+  layoutType CoachLayoutType @default(SEAT)
+
+  description String?
+  totalSeats  Int
+
+  seats   CoachModelSeat[]
+  coaches Coach[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("coach_models")
+}
+
+model CoachModelSeat {
+  id                String     @id @default(uuid())
+  coachModelId      String
+  coachModel        CoachModel @relation(fields: [coachModelId], references: [id], onDelete: Cascade)
+  label             Int // 1,2,3...
+  row               Int // 1,2,3...
+  side              SeatSide // LEFT | RIGHT
+  position          Int // Position within the side (1,2,3...)
+  seatType          SeatType?
+  createdAt         DateTime   @default(now())
+  coachModelCabinId String?
+
+  @@unique([coachModelId, label])
+  @@map("coach_model_seats")
+}
+
+model Coach {
+  id           String       @id @default(uuid())
+  coachCode    String       @unique
+  coachNumber  String // A B C D
+  coachModelId String
+  coachModel   CoachModel   @relation(fields: [coachModelId], references: [id])
+  seats        Seat[]
+  trainCoaches TrainCoach[]
+  status       CoachStatus  @default(AVAILABLE)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@map("coaches")
+}
+
+model Seat {
+  id String @id @default(uuid())
+
+  coachId String
+  coach   Coach  @relation(fields: [coachId], references: [id], onDelete: Cascade)
+
+  label    Int
+  row      Int
+  side     SeatSide
+  position Int
+
+  seatType SeatType?
+
+  status SeatStatus @default(AVAILABLE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cabinId   String?
+
+  @@unique([coachId, label])
+  @@map("seats")
+}
+
+// ASSIGNED TRAIN COACH
+
+model TrainCoach {
+  id       String @id @default(ulid())
+  trainId  String
+  train    Train  @relation(fields: [trainId], references: [id])
+  coachId  String
+  coach    Coach  @relation(fields: [coachId], references: [id])
+  sequence Int
+
+  @@unique([trainId, sequence])
+  @@unique([trainId, coachId])
+  @@map("train_coaches")
+}
+
+// =========== SEAT ================
+// model Cabin {
+//   id          String    @id @default(uuid())
+//   coachId     String
+//   coach       Coach     @relation(fields: [coachId], references: [id], onDelete: Cascade)
+//   cabinNumber String
+//   type        CabinType
+//   createdAt   DateTime  @default(now())
+//   seats       Seat[]
+
+//   @@unique([coachId, cabinNumber])
+// }
+
+// model CoachModelCabin {
+//   id              String           @id @default(uuid())
+//   coachModelId    String
+//   coachModel      CoachModel       @relation(fields: [coachModelId], references: [id], onDelete: Cascade)
+//   cabinNumber     String // C1, C2, C3
+//   cabinType       CabinType // TWO, FOUR, SIX
+//   createdAt       DateTime         @default(now())
+//   coachModelSeats CoachModelSeat[]
+
+//   @@unique([coachModelId, cabinNumber])
+// }
+
+// ============= ROUTE ======================
+model Route {
+  id   String @id @default(ulid())
+  name String
+
+  sourceStationId String
+  sourceStation   Station @relation("RouteSource", fields: [sourceStationId], references: [stationId])
+
+  destinationStationId String
+  destinationStation   Station @relation("RouteDestination", fields: [destinationStationId], references: [stationId])
+
+  distance Float?
+
+  routeStations RouteStation[]
+
+  schedules Schedule[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("routes")
+}
+
+//=================== ROUTE STATION======================
+model RouteStation {
+  id String @id @default(ulid())
+
+  routeId String
+  route   Route  @relation(fields: [routeId], references: [id])
+
+  stationId String
+  station   Station @relation(fields: [stationId], references: [stationId])
+
+  sequence             Int
+  distanceFromStart    Float?
+  distanceFromPrevious Float?
+
+  // ===== সময় =====
+  travelTimeFromPrevious Int?
+  stopTime               Int     @default(2)
+  isMajorStop            Boolean @default(true)
+  platform               String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([routeId, sequence])
+  @@unique([routeId, stationId])
+  @@map("route_stations")
+}
+
+// ================ SCHEDULE =======================
+enum Direction {
+  UP
+  DOWN
+}
+
+enum TripStatus {
+  SCHEDULED
+  RUNNING
+  COMPLETED
+  CANCELLED
+  DELAYED
+}
+
+// ============ SCHEDULE (Master/Template) ============
+model Schedule {
+  id              String         @id @default(ulid())
+  trainId         String
+  train           Train          @relation(fields: [trainId], references: [id])
+  routeId         String
+  route           Route          @relation(fields: [routeId], references: [id])
+  direction       Direction
+  name            String?
+  startTime       String
+  runningDays     Json
+  bookingOpenDays Int
+  validFrom       DateTime
+  validUntil      DateTime?
+  isActive        Boolean        @default(true)
+  tripInstances   TripInstance[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@map("schedules")
+}
+
+// ============ TRIP INSTANCE (একদিনের নির্দিষ্ট যাত্রা) ============
+model TripInstance {
+  id             String     @id @default(ulid())
+  scheduleId     String
+  schedule       Schedule   @relation(fields: [scheduleId], references: [id])
+  journeyDate    DateTime
+  status         TripStatus @default(SCHEDULED)
+  remarks        String?
+  totalSeats     Int?
+  availableSeats Int?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@unique([scheduleId, journeyDate])
+  @@map("trip_instances")
 }
 
 // ================ STAFF MODEL =====================

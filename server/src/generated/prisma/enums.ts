@@ -28,6 +28,105 @@ export const USER_STATUS = {
 export type USER_STATUS = (typeof USER_STATUS)[keyof typeof USER_STATUS]
 
 
+export const TrainType = {
+  INTERCITY: 'INTERCITY',
+  MAIL: 'MAIL',
+  EXPRESS: 'EXPRESS',
+  LOCAL: 'LOCAL',
+  COMMUTER: 'COMMUTER',
+  SPECIAL: 'SPECIAL',
+  GOODS: 'GOODS'
+} as const
+
+export type TrainType = (typeof TrainType)[keyof typeof TrainType]
+
+
+export const CoachType = {
+  AC_CHAIR: 'AC_CHAIR',
+  SHOVON_CHAIR: 'SHOVON_CHAIR',
+  AC_CABIN: 'AC_CABIN',
+  CABIN: 'CABIN',
+  SLEEPER: 'SLEEPER'
+} as const
+
+export type CoachType = (typeof CoachType)[keyof typeof CoachType]
+
+
+export const CoachLayoutType = {
+  SEAT: 'SEAT',
+  CABIN: 'CABIN'
+} as const
+
+export type CoachLayoutType = (typeof CoachLayoutType)[keyof typeof CoachLayoutType]
+
+
+export const CabinType = {
+  TWO: 'TWO',
+  FOUR: 'FOUR',
+  SIX: 'SIX'
+} as const
+
+export type CabinType = (typeof CabinType)[keyof typeof CabinType]
+
+
+export const SeatType = {
+  WINDOW: 'WINDOW',
+  AISLE: 'AISLE',
+  MIDDLE: 'MIDDLE',
+  LOWER: 'LOWER',
+  UPPER: 'UPPER',
+  SIDE_LOWER: 'SIDE_LOWER',
+  SIDE_UPPER: 'SIDE_UPPER'
+} as const
+
+export type SeatType = (typeof SeatType)[keyof typeof SeatType]
+
+
+export const SeatStatus = {
+  AVAILABLE: 'AVAILABLE',
+  BOOKED: 'BOOKED',
+  BLOCKED: 'BLOCKED'
+} as const
+
+export type SeatStatus = (typeof SeatStatus)[keyof typeof SeatStatus]
+
+
+export const CoachStatus = {
+  AVAILABLE: 'AVAILABLE',
+  ASSIGNED: 'ASSIGNED',
+  MAINTENANCE: 'MAINTENANCE'
+} as const
+
+export type CoachStatus = (typeof CoachStatus)[keyof typeof CoachStatus]
+
+
+export const SeatSide = {
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT'
+} as const
+
+export type SeatSide = (typeof SeatSide)[keyof typeof SeatSide]
+
+
+export const Direction = {
+  UP: 'UP',
+  DOWN: 'DOWN'
+} as const
+
+export type Direction = (typeof Direction)[keyof typeof Direction]
+
+
+export const TripStatus = {
+  SCHEDULED: 'SCHEDULED',
+  RUNNING: 'RUNNING',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  DELAYED: 'DELAYED'
+} as const
+
+export type TripStatus = (typeof TripStatus)[keyof typeof TripStatus]
+
+
 export const ShiftType = {
   MORNING: 'MORNING',
   EVENING: 'EVENING',

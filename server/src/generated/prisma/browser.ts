@@ -48,6 +48,56 @@ export type Station = Prisma.StationModel
  */
 export type Platform = Prisma.PlatformModel
 /**
+ * Model Train
+ * 
+ */
+export type Train = Prisma.TrainModel
+/**
+ * Model CoachModel
+ * 
+ */
+export type CoachModel = Prisma.CoachModelModel
+/**
+ * Model CoachModelSeat
+ * 
+ */
+export type CoachModelSeat = Prisma.CoachModelSeatModel
+/**
+ * Model Coach
+ * 
+ */
+export type Coach = Prisma.CoachModel
+/**
+ * Model Seat
+ * 
+ */
+export type Seat = Prisma.SeatModel
+/**
+ * Model TrainCoach
+ * 
+ */
+export type TrainCoach = Prisma.TrainCoachModel
+/**
+ * Model Route
+ * 
+ */
+export type Route = Prisma.RouteModel
+/**
+ * Model RouteStation
+ * 
+ */
+export type RouteStation = Prisma.RouteStationModel
+/**
+ * Model Schedule
+ * 
+ */
+export type Schedule = Prisma.ScheduleModel
+/**
+ * Model TripInstance
+ * 
+ */
+export type TripInstance = Prisma.TripInstanceModel
+/**
  * Model StaffType
  * 
  */

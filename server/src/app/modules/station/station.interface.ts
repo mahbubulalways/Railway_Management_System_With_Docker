@@ -19,7 +19,7 @@ export interface IStation {
   name: string;
 
   status: string;
-  establishedYear: number;
+  established: Date;
   notes: string;
 
   ticketCounter: boolean;

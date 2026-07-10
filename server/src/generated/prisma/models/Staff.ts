@@ -666,10 +666,6 @@ export type EnumShiftTypeFieldUpdateOperationsInput = {
   set?: $Enums.ShiftType
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type StaffCreateWithoutUserInput = {
   id?: string
   staffId: string

@@ -20,18 +20,8 @@ export type StationModel = runtime.Types.Result.DefaultSelection<Prisma.$Station
 
 export type AggregateStation = {
   _count: StationCountAggregateOutputType | null
-  _avg: StationAvgAggregateOutputType | null
-  _sum: StationSumAggregateOutputType | null
   _min: StationMinAggregateOutputType | null
   _max: StationMaxAggregateOutputType | null
-}
-
-export type StationAvgAggregateOutputType = {
-  establishedYear: number | null
-}
-
-export type StationSumAggregateOutputType = {
-  establishedYear: number | null
 }
 
 export type StationMinAggregateOutputType = {
@@ -44,7 +34,7 @@ export type StationMinAggregateOutputType = {
   district: string | null
   name: string | null
   status: string | null
-  establishedYear: number | null
+  established: Date | null
   notes: string | null
   ticketCounter: boolean | null
   onlineTicketSupport: boolean | null
@@ -75,7 +65,7 @@ export type StationMaxAggregateOutputType = {
   district: string | null
   name: string | null
   status: string | null
-  establishedYear: number | null
+  established: Date | null
   notes: string | null
   ticketCounter: boolean | null
   onlineTicketSupport: boolean | null
@@ -106,7 +96,7 @@ export type StationCountAggregateOutputType = {
   district: number
   name: number
   status: number
-  establishedYear: number
+  established: number
   notes: number
   ticketCounter: number
   onlineTicketSupport: number
@@ -129,14 +119,6 @@ export type StationCountAggregateOutputType = {
 }
 
 
-export type StationAvgAggregateInputType = {
-  establishedYear?: true
-}
-
-export type StationSumAggregateInputType = {
-  establishedYear?: true
-}
-
 export type StationMinAggregateInputType = {
   id?: true
   stationId?: true
@@ -147,7 +129,7 @@ export type StationMinAggregateInputType = {
   district?: true
   name?: true
   status?: true
-  establishedYear?: true
+  established?: true
   notes?: true
   ticketCounter?: true
   onlineTicketSupport?: true
@@ -178,7 +160,7 @@ export type StationMaxAggregateInputType = {
   district?: true
   name?: true
   status?: true
-  establishedYear?: true
+  established?: true
   notes?: true
   ticketCounter?: true
   onlineTicketSupport?: true
@@ -209,7 +191,7 @@ export type StationCountAggregateInputType = {
   district?: true
   name?: true
   status?: true
-  establishedYear?: true
+  established?: true
   notes?: true
   ticketCounter?: true
   onlineTicketSupport?: true
@@ -269,18 +251,6 @@ export type StationAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: StationAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: StationSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: StationMinAggregateInputType
@@ -311,8 +281,6 @@ export type StationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: StationCountAggregateInputType | true
-  _avg?: StationAvgAggregateInputType
-  _sum?: StationSumAggregateInputType
   _min?: StationMinAggregateInputType
   _max?: StationMaxAggregateInputType
 }
@@ -327,7 +295,7 @@ export type StationGroupByOutputType = {
   district: string
   name: string
   status: string
-  establishedYear: number | null
+  established: Date
   notes: string | null
   ticketCounter: boolean
   onlineTicketSupport: boolean
@@ -347,8 +315,6 @@ export type StationGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   _count: StationCountAggregateOutputType | null
-  _avg: StationAvgAggregateOutputType | null
-  _sum: StationSumAggregateOutputType | null
   _min: StationMinAggregateOutputType | null
   _max: StationMaxAggregateOutputType | null
 }
@@ -381,7 +347,7 @@ export type StationWhereInput = {
   district?: Prisma.StringFilter<"Station"> | string
   name?: Prisma.StringFilter<"Station"> | string
   status?: Prisma.StringFilter<"Station"> | string
-  establishedYear?: Prisma.IntNullableFilter<"Station"> | number | null
+  established?: Prisma.DateTimeFilter<"Station"> | Date | string
   notes?: Prisma.StringNullableFilter<"Station"> | string | null
   ticketCounter?: Prisma.BoolFilter<"Station"> | boolean
   onlineTicketSupport?: Prisma.BoolFilter<"Station"> | boolean
@@ -402,6 +368,9 @@ export type StationWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Station"> | Date | string
   platforms?: Prisma.PlatformListRelationFilter
   staffs?: Prisma.StaffListRelationFilter
+  routeStations?: Prisma.RouteStationListRelationFilter
+  sourceRoutes?: Prisma.RouteListRelationFilter
+  destinationRoutes?: Prisma.RouteListRelationFilter
 }
 
 export type StationOrderByWithRelationInput = {
@@ -414,7 +383,7 @@ export type StationOrderByWithRelationInput = {
   district?: Prisma.SortOrder
   name?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  establishedYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  established?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   ticketCounter?: Prisma.SortOrder
   onlineTicketSupport?: Prisma.SortOrder
@@ -435,6 +404,9 @@ export type StationOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   platforms?: Prisma.PlatformOrderByRelationAggregateInput
   staffs?: Prisma.StaffOrderByRelationAggregateInput
+  routeStations?: Prisma.RouteStationOrderByRelationAggregateInput
+  sourceRoutes?: Prisma.RouteOrderByRelationAggregateInput
+  destinationRoutes?: Prisma.RouteOrderByRelationAggregateInput
 }
 
 export type StationWhereUniqueInput = Prisma.AtLeast<{
@@ -450,7 +422,7 @@ export type StationWhereUniqueInput = Prisma.AtLeast<{
   district?: Prisma.StringFilter<"Station"> | string
   name?: Prisma.StringFilter<"Station"> | string
   status?: Prisma.StringFilter<"Station"> | string
-  establishedYear?: Prisma.IntNullableFilter<"Station"> | number | null
+  established?: Prisma.DateTimeFilter<"Station"> | Date | string
   notes?: Prisma.StringNullableFilter<"Station"> | string | null
   ticketCounter?: Prisma.BoolFilter<"Station"> | boolean
   onlineTicketSupport?: Prisma.BoolFilter<"Station"> | boolean
@@ -471,6 +443,9 @@ export type StationWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Station"> | Date | string
   platforms?: Prisma.PlatformListRelationFilter
   staffs?: Prisma.StaffListRelationFilter
+  routeStations?: Prisma.RouteStationListRelationFilter
+  sourceRoutes?: Prisma.RouteListRelationFilter
+  destinationRoutes?: Prisma.RouteListRelationFilter
 }, "id" | "stationId" | "phone" | "email">
 
 export type StationOrderByWithAggregationInput = {
@@ -483,7 +458,7 @@ export type StationOrderByWithAggregationInput = {
   district?: Prisma.SortOrder
   name?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  establishedYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  established?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   ticketCounter?: Prisma.SortOrder
   onlineTicketSupport?: Prisma.SortOrder
@@ -503,10 +478,8 @@ export type StationOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.StationCountOrderByAggregateInput
-  _avg?: Prisma.StationAvgOrderByAggregateInput
   _max?: Prisma.StationMaxOrderByAggregateInput
   _min?: Prisma.StationMinOrderByAggregateInput
-  _sum?: Prisma.StationSumOrderByAggregateInput
 }
 
 export type StationScalarWhereWithAggregatesInput = {
@@ -522,7 +495,7 @@ export type StationScalarWhereWithAggregatesInput = {
   district?: Prisma.StringWithAggregatesFilter<"Station"> | string
   name?: Prisma.StringWithAggregatesFilter<"Station"> | string
   status?: Prisma.StringWithAggregatesFilter<"Station"> | string
-  establishedYear?: Prisma.IntNullableWithAggregatesFilter<"Station"> | number | null
+  established?: Prisma.DateTimeWithAggregatesFilter<"Station"> | Date | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"Station"> | string | null
   ticketCounter?: Prisma.BoolWithAggregatesFilter<"Station"> | boolean
   onlineTicketSupport?: Prisma.BoolWithAggregatesFilter<"Station"> | boolean
@@ -553,7 +526,7 @@ export type StationCreateInput = {
   district: string
   name: string
   status?: string
-  establishedYear?: number | null
+  established: Date | string
   notes?: string | null
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -574,6 +547,9 @@ export type StationCreateInput = {
   updatedAt?: Date | string
   platforms?: Prisma.PlatformCreateNestedManyWithoutStationInput
   staffs?: Prisma.StaffCreateNestedManyWithoutStationInput
+  routeStations?: Prisma.RouteStationCreateNestedManyWithoutStationInput
+  sourceRoutes?: Prisma.RouteCreateNestedManyWithoutSourceStationInput
+  destinationRoutes?: Prisma.RouteCreateNestedManyWithoutDestinationStationInput
 }
 
 export type StationUncheckedCreateInput = {
@@ -586,7 +562,7 @@ export type StationUncheckedCreateInput = {
   district: string
   name: string
   status?: string
-  establishedYear?: number | null
+  established: Date | string
   notes?: string | null
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -607,6 +583,9 @@ export type StationUncheckedCreateInput = {
   updatedAt?: Date | string
   platforms?: Prisma.PlatformUncheckedCreateNestedManyWithoutStationInput
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStationInput
+  routeStations?: Prisma.RouteStationUncheckedCreateNestedManyWithoutStationInput
+  sourceRoutes?: Prisma.RouteUncheckedCreateNestedManyWithoutSourceStationInput
+  destinationRoutes?: Prisma.RouteUncheckedCreateNestedManyWithoutDestinationStationInput
 }
 
 export type StationUpdateInput = {
@@ -619,7 +598,7 @@ export type StationUpdateInput = {
   district?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -640,6 +619,9 @@ export type StationUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   platforms?: Prisma.PlatformUpdateManyWithoutStationNestedInput
   staffs?: Prisma.StaffUpdateManyWithoutStationNestedInput
+  routeStations?: Prisma.RouteStationUpdateManyWithoutStationNestedInput
+  sourceRoutes?: Prisma.RouteUpdateManyWithoutSourceStationNestedInput
+  destinationRoutes?: Prisma.RouteUpdateManyWithoutDestinationStationNestedInput
 }
 
 export type StationUncheckedUpdateInput = {
@@ -652,7 +634,7 @@ export type StationUncheckedUpdateInput = {
   district?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -673,6 +655,9 @@ export type StationUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   platforms?: Prisma.PlatformUncheckedUpdateManyWithoutStationNestedInput
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutStationNestedInput
+  routeStations?: Prisma.RouteStationUncheckedUpdateManyWithoutStationNestedInput
+  sourceRoutes?: Prisma.RouteUncheckedUpdateManyWithoutSourceStationNestedInput
+  destinationRoutes?: Prisma.RouteUncheckedUpdateManyWithoutDestinationStationNestedInput
 }
 
 export type StationCreateManyInput = {
@@ -685,7 +670,7 @@ export type StationCreateManyInput = {
   district: string
   name: string
   status?: string
-  establishedYear?: number | null
+  established: Date | string
   notes?: string | null
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -716,7 +701,7 @@ export type StationUpdateManyMutationInput = {
   district?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -747,7 +732,7 @@ export type StationUncheckedUpdateManyInput = {
   district?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -778,7 +763,7 @@ export type StationCountOrderByAggregateInput = {
   district?: Prisma.SortOrder
   name?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  establishedYear?: Prisma.SortOrder
+  established?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   ticketCounter?: Prisma.SortOrder
   onlineTicketSupport?: Prisma.SortOrder
@@ -799,10 +784,6 @@ export type StationCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type StationAvgOrderByAggregateInput = {
-  establishedYear?: Prisma.SortOrder
-}
-
 export type StationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   stationId?: Prisma.SortOrder
@@ -813,7 +794,7 @@ export type StationMaxOrderByAggregateInput = {
   district?: Prisma.SortOrder
   name?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  establishedYear?: Prisma.SortOrder
+  established?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   ticketCounter?: Prisma.SortOrder
   onlineTicketSupport?: Prisma.SortOrder
@@ -844,7 +825,7 @@ export type StationMinOrderByAggregateInput = {
   district?: Prisma.SortOrder
   name?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  establishedYear?: Prisma.SortOrder
+  established?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   ticketCounter?: Prisma.SortOrder
   onlineTicketSupport?: Prisma.SortOrder
@@ -865,21 +846,9 @@ export type StationMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type StationSumOrderByAggregateInput = {
-  establishedYear?: Prisma.SortOrder
-}
-
 export type StationScalarRelationFilter = {
   is?: Prisma.StationWhereInput
   isNot?: Prisma.StationWhereInput
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type StationCreateNestedOneWithoutPlatformsInput = {
@@ -894,6 +863,48 @@ export type StationUpdateOneRequiredWithoutPlatformsNestedInput = {
   upsert?: Prisma.StationUpsertWithoutPlatformsInput
   connect?: Prisma.StationWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.StationUpdateToOneWithWhereWithoutPlatformsInput, Prisma.StationUpdateWithoutPlatformsInput>, Prisma.StationUncheckedUpdateWithoutPlatformsInput>
+}
+
+export type StationCreateNestedOneWithoutSourceRoutesInput = {
+  create?: Prisma.XOR<Prisma.StationCreateWithoutSourceRoutesInput, Prisma.StationUncheckedCreateWithoutSourceRoutesInput>
+  connectOrCreate?: Prisma.StationCreateOrConnectWithoutSourceRoutesInput
+  connect?: Prisma.StationWhereUniqueInput
+}
+
+export type StationCreateNestedOneWithoutDestinationRoutesInput = {
+  create?: Prisma.XOR<Prisma.StationCreateWithoutDestinationRoutesInput, Prisma.StationUncheckedCreateWithoutDestinationRoutesInput>
+  connectOrCreate?: Prisma.StationCreateOrConnectWithoutDestinationRoutesInput
+  connect?: Prisma.StationWhereUniqueInput
+}
+
+export type StationUpdateOneRequiredWithoutSourceRoutesNestedInput = {
+  create?: Prisma.XOR<Prisma.StationCreateWithoutSourceRoutesInput, Prisma.StationUncheckedCreateWithoutSourceRoutesInput>
+  connectOrCreate?: Prisma.StationCreateOrConnectWithoutSourceRoutesInput
+  upsert?: Prisma.StationUpsertWithoutSourceRoutesInput
+  connect?: Prisma.StationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StationUpdateToOneWithWhereWithoutSourceRoutesInput, Prisma.StationUpdateWithoutSourceRoutesInput>, Prisma.StationUncheckedUpdateWithoutSourceRoutesInput>
+}
+
+export type StationUpdateOneRequiredWithoutDestinationRoutesNestedInput = {
+  create?: Prisma.XOR<Prisma.StationCreateWithoutDestinationRoutesInput, Prisma.StationUncheckedCreateWithoutDestinationRoutesInput>
+  connectOrCreate?: Prisma.StationCreateOrConnectWithoutDestinationRoutesInput
+  upsert?: Prisma.StationUpsertWithoutDestinationRoutesInput
+  connect?: Prisma.StationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StationUpdateToOneWithWhereWithoutDestinationRoutesInput, Prisma.StationUpdateWithoutDestinationRoutesInput>, Prisma.StationUncheckedUpdateWithoutDestinationRoutesInput>
+}
+
+export type StationCreateNestedOneWithoutRouteStationsInput = {
+  create?: Prisma.XOR<Prisma.StationCreateWithoutRouteStationsInput, Prisma.StationUncheckedCreateWithoutRouteStationsInput>
+  connectOrCreate?: Prisma.StationCreateOrConnectWithoutRouteStationsInput
+  connect?: Prisma.StationWhereUniqueInput
+}
+
+export type StationUpdateOneRequiredWithoutRouteStationsNestedInput = {
+  create?: Prisma.XOR<Prisma.StationCreateWithoutRouteStationsInput, Prisma.StationUncheckedCreateWithoutRouteStationsInput>
+  connectOrCreate?: Prisma.StationCreateOrConnectWithoutRouteStationsInput
+  upsert?: Prisma.StationUpsertWithoutRouteStationsInput
+  connect?: Prisma.StationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StationUpdateToOneWithWhereWithoutRouteStationsInput, Prisma.StationUpdateWithoutRouteStationsInput>, Prisma.StationUncheckedUpdateWithoutRouteStationsInput>
 }
 
 export type StationCreateNestedOneWithoutStaffsInput = {
@@ -920,7 +931,7 @@ export type StationCreateWithoutPlatformsInput = {
   district: string
   name: string
   status?: string
-  establishedYear?: number | null
+  established: Date | string
   notes?: string | null
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -940,6 +951,9 @@ export type StationCreateWithoutPlatformsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   staffs?: Prisma.StaffCreateNestedManyWithoutStationInput
+  routeStations?: Prisma.RouteStationCreateNestedManyWithoutStationInput
+  sourceRoutes?: Prisma.RouteCreateNestedManyWithoutSourceStationInput
+  destinationRoutes?: Prisma.RouteCreateNestedManyWithoutDestinationStationInput
 }
 
 export type StationUncheckedCreateWithoutPlatformsInput = {
@@ -952,7 +966,7 @@ export type StationUncheckedCreateWithoutPlatformsInput = {
   district: string
   name: string
   status?: string
-  establishedYear?: number | null
+  established: Date | string
   notes?: string | null
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -972,6 +986,9 @@ export type StationUncheckedCreateWithoutPlatformsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStationInput
+  routeStations?: Prisma.RouteStationUncheckedCreateNestedManyWithoutStationInput
+  sourceRoutes?: Prisma.RouteUncheckedCreateNestedManyWithoutSourceStationInput
+  destinationRoutes?: Prisma.RouteUncheckedCreateNestedManyWithoutDestinationStationInput
 }
 
 export type StationCreateOrConnectWithoutPlatformsInput = {
@@ -1000,7 +1017,7 @@ export type StationUpdateWithoutPlatformsInput = {
   district?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1020,6 +1037,9 @@ export type StationUpdateWithoutPlatformsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   staffs?: Prisma.StaffUpdateManyWithoutStationNestedInput
+  routeStations?: Prisma.RouteStationUpdateManyWithoutStationNestedInput
+  sourceRoutes?: Prisma.RouteUpdateManyWithoutSourceStationNestedInput
+  destinationRoutes?: Prisma.RouteUpdateManyWithoutDestinationStationNestedInput
 }
 
 export type StationUncheckedUpdateWithoutPlatformsInput = {
@@ -1032,7 +1052,7 @@ export type StationUncheckedUpdateWithoutPlatformsInput = {
   district?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1052,9 +1072,12 @@ export type StationUncheckedUpdateWithoutPlatformsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutStationNestedInput
+  routeStations?: Prisma.RouteStationUncheckedUpdateManyWithoutStationNestedInput
+  sourceRoutes?: Prisma.RouteUncheckedUpdateManyWithoutSourceStationNestedInput
+  destinationRoutes?: Prisma.RouteUncheckedUpdateManyWithoutDestinationStationNestedInput
 }
 
-export type StationCreateWithoutStaffsInput = {
+export type StationCreateWithoutSourceRoutesInput = {
   id?: string
   stationId: string
   phone: string
@@ -1064,7 +1087,7 @@ export type StationCreateWithoutStaffsInput = {
   district: string
   name: string
   status?: string
-  establishedYear?: number | null
+  established: Date | string
   notes?: string | null
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -1084,9 +1107,12 @@ export type StationCreateWithoutStaffsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   platforms?: Prisma.PlatformCreateNestedManyWithoutStationInput
+  staffs?: Prisma.StaffCreateNestedManyWithoutStationInput
+  routeStations?: Prisma.RouteStationCreateNestedManyWithoutStationInput
+  destinationRoutes?: Prisma.RouteCreateNestedManyWithoutDestinationStationInput
 }
 
-export type StationUncheckedCreateWithoutStaffsInput = {
+export type StationUncheckedCreateWithoutSourceRoutesInput = {
   id?: string
   stationId: string
   phone: string
@@ -1096,7 +1122,7 @@ export type StationUncheckedCreateWithoutStaffsInput = {
   district: string
   name: string
   status?: string
-  establishedYear?: number | null
+  established: Date | string
   notes?: string | null
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -1116,6 +1142,477 @@ export type StationUncheckedCreateWithoutStaffsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   platforms?: Prisma.PlatformUncheckedCreateNestedManyWithoutStationInput
+  staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStationInput
+  routeStations?: Prisma.RouteStationUncheckedCreateNestedManyWithoutStationInput
+  destinationRoutes?: Prisma.RouteUncheckedCreateNestedManyWithoutDestinationStationInput
+}
+
+export type StationCreateOrConnectWithoutSourceRoutesInput = {
+  where: Prisma.StationWhereUniqueInput
+  create: Prisma.XOR<Prisma.StationCreateWithoutSourceRoutesInput, Prisma.StationUncheckedCreateWithoutSourceRoutesInput>
+}
+
+export type StationCreateWithoutDestinationRoutesInput = {
+  id?: string
+  stationId: string
+  phone: string
+  email: string
+  type: string
+  division: string
+  district: string
+  name: string
+  status?: string
+  established: Date | string
+  notes?: string | null
+  ticketCounter?: boolean
+  onlineTicketSupport?: boolean
+  foodCourt?: boolean
+  parking?: boolean
+  hasDisplayBoard?: boolean
+  hasAnnouncementSystem?: boolean
+  wheelchairAccess?: boolean
+  wifi?: boolean
+  washroom?: boolean
+  atm?: boolean
+  securityService?: boolean
+  cctv?: boolean
+  prayerRoom?: boolean
+  escalator?: boolean
+  lift?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  platforms?: Prisma.PlatformCreateNestedManyWithoutStationInput
+  staffs?: Prisma.StaffCreateNestedManyWithoutStationInput
+  routeStations?: Prisma.RouteStationCreateNestedManyWithoutStationInput
+  sourceRoutes?: Prisma.RouteCreateNestedManyWithoutSourceStationInput
+}
+
+export type StationUncheckedCreateWithoutDestinationRoutesInput = {
+  id?: string
+  stationId: string
+  phone: string
+  email: string
+  type: string
+  division: string
+  district: string
+  name: string
+  status?: string
+  established: Date | string
+  notes?: string | null
+  ticketCounter?: boolean
+  onlineTicketSupport?: boolean
+  foodCourt?: boolean
+  parking?: boolean
+  hasDisplayBoard?: boolean
+  hasAnnouncementSystem?: boolean
+  wheelchairAccess?: boolean
+  wifi?: boolean
+  washroom?: boolean
+  atm?: boolean
+  securityService?: boolean
+  cctv?: boolean
+  prayerRoom?: boolean
+  escalator?: boolean
+  lift?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  platforms?: Prisma.PlatformUncheckedCreateNestedManyWithoutStationInput
+  staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStationInput
+  routeStations?: Prisma.RouteStationUncheckedCreateNestedManyWithoutStationInput
+  sourceRoutes?: Prisma.RouteUncheckedCreateNestedManyWithoutSourceStationInput
+}
+
+export type StationCreateOrConnectWithoutDestinationRoutesInput = {
+  where: Prisma.StationWhereUniqueInput
+  create: Prisma.XOR<Prisma.StationCreateWithoutDestinationRoutesInput, Prisma.StationUncheckedCreateWithoutDestinationRoutesInput>
+}
+
+export type StationUpsertWithoutSourceRoutesInput = {
+  update: Prisma.XOR<Prisma.StationUpdateWithoutSourceRoutesInput, Prisma.StationUncheckedUpdateWithoutSourceRoutesInput>
+  create: Prisma.XOR<Prisma.StationCreateWithoutSourceRoutesInput, Prisma.StationUncheckedCreateWithoutSourceRoutesInput>
+  where?: Prisma.StationWhereInput
+}
+
+export type StationUpdateToOneWithWhereWithoutSourceRoutesInput = {
+  where?: Prisma.StationWhereInput
+  data: Prisma.XOR<Prisma.StationUpdateWithoutSourceRoutesInput, Prisma.StationUncheckedUpdateWithoutSourceRoutesInput>
+}
+
+export type StationUpdateWithoutSourceRoutesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stationId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foodCourt?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parking?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasDisplayBoard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAnnouncementSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wheelchairAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wifi?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  washroom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  atm?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  securityService?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cctv?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prayerRoom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  escalator?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  platforms?: Prisma.PlatformUpdateManyWithoutStationNestedInput
+  staffs?: Prisma.StaffUpdateManyWithoutStationNestedInput
+  routeStations?: Prisma.RouteStationUpdateManyWithoutStationNestedInput
+  destinationRoutes?: Prisma.RouteUpdateManyWithoutDestinationStationNestedInput
+}
+
+export type StationUncheckedUpdateWithoutSourceRoutesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stationId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foodCourt?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parking?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasDisplayBoard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAnnouncementSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wheelchairAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wifi?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  washroom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  atm?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  securityService?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cctv?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prayerRoom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  escalator?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  platforms?: Prisma.PlatformUncheckedUpdateManyWithoutStationNestedInput
+  staffs?: Prisma.StaffUncheckedUpdateManyWithoutStationNestedInput
+  routeStations?: Prisma.RouteStationUncheckedUpdateManyWithoutStationNestedInput
+  destinationRoutes?: Prisma.RouteUncheckedUpdateManyWithoutDestinationStationNestedInput
+}
+
+export type StationUpsertWithoutDestinationRoutesInput = {
+  update: Prisma.XOR<Prisma.StationUpdateWithoutDestinationRoutesInput, Prisma.StationUncheckedUpdateWithoutDestinationRoutesInput>
+  create: Prisma.XOR<Prisma.StationCreateWithoutDestinationRoutesInput, Prisma.StationUncheckedCreateWithoutDestinationRoutesInput>
+  where?: Prisma.StationWhereInput
+}
+
+export type StationUpdateToOneWithWhereWithoutDestinationRoutesInput = {
+  where?: Prisma.StationWhereInput
+  data: Prisma.XOR<Prisma.StationUpdateWithoutDestinationRoutesInput, Prisma.StationUncheckedUpdateWithoutDestinationRoutesInput>
+}
+
+export type StationUpdateWithoutDestinationRoutesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stationId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foodCourt?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parking?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasDisplayBoard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAnnouncementSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wheelchairAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wifi?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  washroom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  atm?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  securityService?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cctv?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prayerRoom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  escalator?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  platforms?: Prisma.PlatformUpdateManyWithoutStationNestedInput
+  staffs?: Prisma.StaffUpdateManyWithoutStationNestedInput
+  routeStations?: Prisma.RouteStationUpdateManyWithoutStationNestedInput
+  sourceRoutes?: Prisma.RouteUpdateManyWithoutSourceStationNestedInput
+}
+
+export type StationUncheckedUpdateWithoutDestinationRoutesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stationId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foodCourt?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parking?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasDisplayBoard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAnnouncementSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wheelchairAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wifi?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  washroom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  atm?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  securityService?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cctv?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prayerRoom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  escalator?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  platforms?: Prisma.PlatformUncheckedUpdateManyWithoutStationNestedInput
+  staffs?: Prisma.StaffUncheckedUpdateManyWithoutStationNestedInput
+  routeStations?: Prisma.RouteStationUncheckedUpdateManyWithoutStationNestedInput
+  sourceRoutes?: Prisma.RouteUncheckedUpdateManyWithoutSourceStationNestedInput
+}
+
+export type StationCreateWithoutRouteStationsInput = {
+  id?: string
+  stationId: string
+  phone: string
+  email: string
+  type: string
+  division: string
+  district: string
+  name: string
+  status?: string
+  established: Date | string
+  notes?: string | null
+  ticketCounter?: boolean
+  onlineTicketSupport?: boolean
+  foodCourt?: boolean
+  parking?: boolean
+  hasDisplayBoard?: boolean
+  hasAnnouncementSystem?: boolean
+  wheelchairAccess?: boolean
+  wifi?: boolean
+  washroom?: boolean
+  atm?: boolean
+  securityService?: boolean
+  cctv?: boolean
+  prayerRoom?: boolean
+  escalator?: boolean
+  lift?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  platforms?: Prisma.PlatformCreateNestedManyWithoutStationInput
+  staffs?: Prisma.StaffCreateNestedManyWithoutStationInput
+  sourceRoutes?: Prisma.RouteCreateNestedManyWithoutSourceStationInput
+  destinationRoutes?: Prisma.RouteCreateNestedManyWithoutDestinationStationInput
+}
+
+export type StationUncheckedCreateWithoutRouteStationsInput = {
+  id?: string
+  stationId: string
+  phone: string
+  email: string
+  type: string
+  division: string
+  district: string
+  name: string
+  status?: string
+  established: Date | string
+  notes?: string | null
+  ticketCounter?: boolean
+  onlineTicketSupport?: boolean
+  foodCourt?: boolean
+  parking?: boolean
+  hasDisplayBoard?: boolean
+  hasAnnouncementSystem?: boolean
+  wheelchairAccess?: boolean
+  wifi?: boolean
+  washroom?: boolean
+  atm?: boolean
+  securityService?: boolean
+  cctv?: boolean
+  prayerRoom?: boolean
+  escalator?: boolean
+  lift?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  platforms?: Prisma.PlatformUncheckedCreateNestedManyWithoutStationInput
+  staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStationInput
+  sourceRoutes?: Prisma.RouteUncheckedCreateNestedManyWithoutSourceStationInput
+  destinationRoutes?: Prisma.RouteUncheckedCreateNestedManyWithoutDestinationStationInput
+}
+
+export type StationCreateOrConnectWithoutRouteStationsInput = {
+  where: Prisma.StationWhereUniqueInput
+  create: Prisma.XOR<Prisma.StationCreateWithoutRouteStationsInput, Prisma.StationUncheckedCreateWithoutRouteStationsInput>
+}
+
+export type StationUpsertWithoutRouteStationsInput = {
+  update: Prisma.XOR<Prisma.StationUpdateWithoutRouteStationsInput, Prisma.StationUncheckedUpdateWithoutRouteStationsInput>
+  create: Prisma.XOR<Prisma.StationCreateWithoutRouteStationsInput, Prisma.StationUncheckedCreateWithoutRouteStationsInput>
+  where?: Prisma.StationWhereInput
+}
+
+export type StationUpdateToOneWithWhereWithoutRouteStationsInput = {
+  where?: Prisma.StationWhereInput
+  data: Prisma.XOR<Prisma.StationUpdateWithoutRouteStationsInput, Prisma.StationUncheckedUpdateWithoutRouteStationsInput>
+}
+
+export type StationUpdateWithoutRouteStationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stationId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foodCourt?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parking?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasDisplayBoard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAnnouncementSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wheelchairAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wifi?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  washroom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  atm?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  securityService?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cctv?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prayerRoom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  escalator?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  platforms?: Prisma.PlatformUpdateManyWithoutStationNestedInput
+  staffs?: Prisma.StaffUpdateManyWithoutStationNestedInput
+  sourceRoutes?: Prisma.RouteUpdateManyWithoutSourceStationNestedInput
+  destinationRoutes?: Prisma.RouteUpdateManyWithoutDestinationStationNestedInput
+}
+
+export type StationUncheckedUpdateWithoutRouteStationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stationId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  division?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  foodCourt?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  parking?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasDisplayBoard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAnnouncementSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wheelchairAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  wifi?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  washroom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  atm?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  securityService?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cctv?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prayerRoom?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  escalator?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lift?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  platforms?: Prisma.PlatformUncheckedUpdateManyWithoutStationNestedInput
+  staffs?: Prisma.StaffUncheckedUpdateManyWithoutStationNestedInput
+  sourceRoutes?: Prisma.RouteUncheckedUpdateManyWithoutSourceStationNestedInput
+  destinationRoutes?: Prisma.RouteUncheckedUpdateManyWithoutDestinationStationNestedInput
+}
+
+export type StationCreateWithoutStaffsInput = {
+  id?: string
+  stationId: string
+  phone: string
+  email: string
+  type: string
+  division: string
+  district: string
+  name: string
+  status?: string
+  established: Date | string
+  notes?: string | null
+  ticketCounter?: boolean
+  onlineTicketSupport?: boolean
+  foodCourt?: boolean
+  parking?: boolean
+  hasDisplayBoard?: boolean
+  hasAnnouncementSystem?: boolean
+  wheelchairAccess?: boolean
+  wifi?: boolean
+  washroom?: boolean
+  atm?: boolean
+  securityService?: boolean
+  cctv?: boolean
+  prayerRoom?: boolean
+  escalator?: boolean
+  lift?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  platforms?: Prisma.PlatformCreateNestedManyWithoutStationInput
+  routeStations?: Prisma.RouteStationCreateNestedManyWithoutStationInput
+  sourceRoutes?: Prisma.RouteCreateNestedManyWithoutSourceStationInput
+  destinationRoutes?: Prisma.RouteCreateNestedManyWithoutDestinationStationInput
+}
+
+export type StationUncheckedCreateWithoutStaffsInput = {
+  id?: string
+  stationId: string
+  phone: string
+  email: string
+  type: string
+  division: string
+  district: string
+  name: string
+  status?: string
+  established: Date | string
+  notes?: string | null
+  ticketCounter?: boolean
+  onlineTicketSupport?: boolean
+  foodCourt?: boolean
+  parking?: boolean
+  hasDisplayBoard?: boolean
+  hasAnnouncementSystem?: boolean
+  wheelchairAccess?: boolean
+  wifi?: boolean
+  washroom?: boolean
+  atm?: boolean
+  securityService?: boolean
+  cctv?: boolean
+  prayerRoom?: boolean
+  escalator?: boolean
+  lift?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  platforms?: Prisma.PlatformUncheckedCreateNestedManyWithoutStationInput
+  routeStations?: Prisma.RouteStationUncheckedCreateNestedManyWithoutStationInput
+  sourceRoutes?: Prisma.RouteUncheckedCreateNestedManyWithoutSourceStationInput
+  destinationRoutes?: Prisma.RouteUncheckedCreateNestedManyWithoutDestinationStationInput
 }
 
 export type StationCreateOrConnectWithoutStaffsInput = {
@@ -1144,7 +1641,7 @@ export type StationUpdateWithoutStaffsInput = {
   district?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1164,6 +1661,9 @@ export type StationUpdateWithoutStaffsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   platforms?: Prisma.PlatformUpdateManyWithoutStationNestedInput
+  routeStations?: Prisma.RouteStationUpdateManyWithoutStationNestedInput
+  sourceRoutes?: Prisma.RouteUpdateManyWithoutSourceStationNestedInput
+  destinationRoutes?: Prisma.RouteUpdateManyWithoutDestinationStationNestedInput
 }
 
 export type StationUncheckedUpdateWithoutStaffsInput = {
@@ -1176,7 +1676,7 @@ export type StationUncheckedUpdateWithoutStaffsInput = {
   district?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  establishedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  established?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ticketCounter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onlineTicketSupport?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1196,6 +1696,9 @@ export type StationUncheckedUpdateWithoutStaffsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   platforms?: Prisma.PlatformUncheckedUpdateManyWithoutStationNestedInput
+  routeStations?: Prisma.RouteStationUncheckedUpdateManyWithoutStationNestedInput
+  sourceRoutes?: Prisma.RouteUncheckedUpdateManyWithoutSourceStationNestedInput
+  destinationRoutes?: Prisma.RouteUncheckedUpdateManyWithoutDestinationStationNestedInput
 }
 
 
@@ -1206,11 +1709,17 @@ export type StationUncheckedUpdateWithoutStaffsInput = {
 export type StationCountOutputType = {
   platforms: number
   staffs: number
+  routeStations: number
+  sourceRoutes: number
+  destinationRoutes: number
 }
 
 export type StationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   platforms?: boolean | StationCountOutputTypeCountPlatformsArgs
   staffs?: boolean | StationCountOutputTypeCountStaffsArgs
+  routeStations?: boolean | StationCountOutputTypeCountRouteStationsArgs
+  sourceRoutes?: boolean | StationCountOutputTypeCountSourceRoutesArgs
+  destinationRoutes?: boolean | StationCountOutputTypeCountDestinationRoutesArgs
 }
 
 /**
@@ -1237,6 +1746,27 @@ export type StationCountOutputTypeCountStaffsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.StaffWhereInput
 }
 
+/**
+ * StationCountOutputType without action
+ */
+export type StationCountOutputTypeCountRouteStationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RouteStationWhereInput
+}
+
+/**
+ * StationCountOutputType without action
+ */
+export type StationCountOutputTypeCountSourceRoutesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RouteWhereInput
+}
+
+/**
+ * StationCountOutputType without action
+ */
+export type StationCountOutputTypeCountDestinationRoutesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RouteWhereInput
+}
+
 
 export type StationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1248,7 +1778,7 @@ export type StationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   district?: boolean
   name?: boolean
   status?: boolean
-  establishedYear?: boolean
+  established?: boolean
   notes?: boolean
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -1269,6 +1799,9 @@ export type StationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updatedAt?: boolean
   platforms?: boolean | Prisma.Station$platformsArgs<ExtArgs>
   staffs?: boolean | Prisma.Station$staffsArgs<ExtArgs>
+  routeStations?: boolean | Prisma.Station$routeStationsArgs<ExtArgs>
+  sourceRoutes?: boolean | Prisma.Station$sourceRoutesArgs<ExtArgs>
+  destinationRoutes?: boolean | Prisma.Station$destinationRoutesArgs<ExtArgs>
   _count?: boolean | Prisma.StationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["station"]>
 
@@ -1282,7 +1815,7 @@ export type StationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   district?: boolean
   name?: boolean
   status?: boolean
-  establishedYear?: boolean
+  established?: boolean
   notes?: boolean
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -1313,7 +1846,7 @@ export type StationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   district?: boolean
   name?: boolean
   status?: boolean
-  establishedYear?: boolean
+  established?: boolean
   notes?: boolean
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -1344,7 +1877,7 @@ export type StationSelectScalar = {
   district?: boolean
   name?: boolean
   status?: boolean
-  establishedYear?: boolean
+  established?: boolean
   notes?: boolean
   ticketCounter?: boolean
   onlineTicketSupport?: boolean
@@ -1365,10 +1898,13 @@ export type StationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type StationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "stationId" | "phone" | "email" | "type" | "division" | "district" | "name" | "status" | "establishedYear" | "notes" | "ticketCounter" | "onlineTicketSupport" | "foodCourt" | "parking" | "hasDisplayBoard" | "hasAnnouncementSystem" | "wheelchairAccess" | "wifi" | "washroom" | "atm" | "securityService" | "cctv" | "prayerRoom" | "escalator" | "lift" | "createdAt" | "updatedAt", ExtArgs["result"]["station"]>
+export type StationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "stationId" | "phone" | "email" | "type" | "division" | "district" | "name" | "status" | "established" | "notes" | "ticketCounter" | "onlineTicketSupport" | "foodCourt" | "parking" | "hasDisplayBoard" | "hasAnnouncementSystem" | "wheelchairAccess" | "wifi" | "washroom" | "atm" | "securityService" | "cctv" | "prayerRoom" | "escalator" | "lift" | "createdAt" | "updatedAt", ExtArgs["result"]["station"]>
 export type StationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   platforms?: boolean | Prisma.Station$platformsArgs<ExtArgs>
   staffs?: boolean | Prisma.Station$staffsArgs<ExtArgs>
+  routeStations?: boolean | Prisma.Station$routeStationsArgs<ExtArgs>
+  sourceRoutes?: boolean | Prisma.Station$sourceRoutesArgs<ExtArgs>
+  destinationRoutes?: boolean | Prisma.Station$destinationRoutesArgs<ExtArgs>
   _count?: boolean | Prisma.StationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1379,6 +1915,9 @@ export type $StationPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     platforms: Prisma.$PlatformPayload<ExtArgs>[]
     staffs: Prisma.$StaffPayload<ExtArgs>[]
+    routeStations: Prisma.$RouteStationPayload<ExtArgs>[]
+    sourceRoutes: Prisma.$RoutePayload<ExtArgs>[]
+    destinationRoutes: Prisma.$RoutePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1390,7 +1929,7 @@ export type $StationPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     district: string
     name: string
     status: string
-    establishedYear: number | null
+    established: Date
     notes: string | null
     ticketCounter: boolean
     onlineTicketSupport: boolean
@@ -1805,6 +2344,9 @@ export interface Prisma__StationClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   platforms<T extends Prisma.Station$platformsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Station$platformsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlatformPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   staffs<T extends Prisma.Station$staffsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Station$staffsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  routeStations<T extends Prisma.Station$routeStationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Station$routeStationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RouteStationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sourceRoutes<T extends Prisma.Station$sourceRoutesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Station$sourceRoutesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  destinationRoutes<T extends Prisma.Station$destinationRoutesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Station$destinationRoutesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1843,7 +2385,7 @@ export interface StationFieldRefs {
   readonly district: Prisma.FieldRef<"Station", 'String'>
   readonly name: Prisma.FieldRef<"Station", 'String'>
   readonly status: Prisma.FieldRef<"Station", 'String'>
-  readonly establishedYear: Prisma.FieldRef<"Station", 'Int'>
+  readonly established: Prisma.FieldRef<"Station", 'DateTime'>
   readonly notes: Prisma.FieldRef<"Station", 'String'>
   readonly ticketCounter: Prisma.FieldRef<"Station", 'Boolean'>
   readonly onlineTicketSupport: Prisma.FieldRef<"Station", 'Boolean'>
@@ -2300,6 +2842,78 @@ export type Station$staffsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.StaffScalarFieldEnum | Prisma.StaffScalarFieldEnum[]
+}
+
+/**
+ * Station.routeStations
+ */
+export type Station$routeStationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RouteStation
+   */
+  select?: Prisma.RouteStationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RouteStation
+   */
+  omit?: Prisma.RouteStationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RouteStationInclude<ExtArgs> | null
+  where?: Prisma.RouteStationWhereInput
+  orderBy?: Prisma.RouteStationOrderByWithRelationInput | Prisma.RouteStationOrderByWithRelationInput[]
+  cursor?: Prisma.RouteStationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RouteStationScalarFieldEnum | Prisma.RouteStationScalarFieldEnum[]
+}
+
+/**
+ * Station.sourceRoutes
+ */
+export type Station$sourceRoutesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Route
+   */
+  select?: Prisma.RouteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Route
+   */
+  omit?: Prisma.RouteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RouteInclude<ExtArgs> | null
+  where?: Prisma.RouteWhereInput
+  orderBy?: Prisma.RouteOrderByWithRelationInput | Prisma.RouteOrderByWithRelationInput[]
+  cursor?: Prisma.RouteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RouteScalarFieldEnum | Prisma.RouteScalarFieldEnum[]
+}
+
+/**
+ * Station.destinationRoutes
+ */
+export type Station$destinationRoutesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Route
+   */
+  select?: Prisma.RouteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Route
+   */
+  omit?: Prisma.RouteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RouteInclude<ExtArgs> | null
+  where?: Prisma.RouteWhereInput
+  orderBy?: Prisma.RouteOrderByWithRelationInput | Prisma.RouteOrderByWithRelationInput[]
+  cursor?: Prisma.RouteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RouteScalarFieldEnum | Prisma.RouteScalarFieldEnum[]
 }
 
 /**
