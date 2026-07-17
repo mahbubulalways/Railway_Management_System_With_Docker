@@ -141,7 +141,7 @@ const GetOwnStationPermissionServicePrivate = async (userId: string) => {
 const GetStationServicePublic = async (query: TQuery) => {
   const pagination = paginationHelper(query.page, query.limit);
   const where = modifySearch({
-    search: query.search,
+    search: query.search!,
     stringFields: [
       "stationId",
       "name",

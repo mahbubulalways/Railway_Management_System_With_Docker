@@ -18,7 +18,7 @@ const createTrainService = async (payload: ITrain) => {
 const getAllTrainService = async (query: TQuery) => {
   const { limit, page, skip } = paginationHelper(query.page, query.limit);
   const where = modifySearch({
-    search: query.search,
+    search: query.search!,
     stringFields: ["name", "status", "trainId"],
     numberFields: ["maxSpeed", "manufactureYear"],
   });
@@ -47,13 +47,31 @@ const getAllTrainService = async (query: TQuery) => {
 };
 
 // GET SINGLE TRAIN
-const getSingleTrainService = async (id: string) => {
-  return true;
+const getSingleTrainService = async (trainId: string) => {
+  const result = await prisma.train.findFirst({
+    where: { trainId },
+    include: {
+      coaches: {
+        include: {
+          coach: {
+            select: {
+              coachCode: true,
+              id: true,
+              coachNumber: true,
+              _count: { select: { seats: true } },
+              coachModel: { select: { type: true } },
+            },
+          },
+        },
+      },
+      schedules: true,
+    },
+  });
+  return result;
 };
 
 // ADD COACH TO TRAIN
 const addCoachToTrainService = async (payload: ITrainCoach) => {
-  console.log(payload);
   const trainCoach = payload.coachId.map((ci: string, idx: number) => ({
     trainId: payload.trainId,
     coachId: ci,

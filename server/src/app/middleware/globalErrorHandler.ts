@@ -5,6 +5,9 @@ import { Config } from "../../config";
 import { StatusCodes } from "http-status-codes";
 import { ZodError } from "zod";
 import { handleZodError } from "./handleZodError";
+import { handlePrismaError } from "./handlePrismaError";
+import { Prisma } from "../../generated/prisma/client";
+import { handlePrismaValidationError } from "./handlePrismaValidationError";
 
 const globalErrorHandler = (
   err: any,
@@ -28,6 +31,20 @@ const globalErrorHandler = (
     statusCode = simplyfliedError.statusCode;
     message = simplyfliedError.message;
   }
+
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    const simplifiedError = handlePrismaError(err);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorSources = simplifiedError.errorSources;
+  }
+
+  // if (err instanceof Prisma.PrismaClientValidationError) {
+  //   const simplifiedError = handlePrismaValidationError(err);
+  //   statusCode = simplifiedError.statusCode;
+  //   message = simplifiedError.message;
+  //   errorSources = simplifiedError.errorSources;
+  // }
 
   res.status(statusCode).json({
     statusCode,

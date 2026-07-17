@@ -1,5 +1,10 @@
 import { StatusCodes } from "http-status-codes";
-import { Coach, SeatStatus } from "../../../generated/prisma/client";
+import {
+  CoachLayoutType,
+  CoachStatus,
+  CoachType,
+  SeatStatus,
+} from "../../../generated/prisma/client";
 import prisma from "../../../helper/prisma";
 import { AppError } from "../../error/AppError";
 import { ICoachCreate } from "./coach.interface";
@@ -58,7 +63,7 @@ const createCoachService = async (payload: ICoachCreate) => {
 const getAllCoachService = async (query: TQuery) => {
   const { limit, page, skip } = paginationHelper(query.page, query.limit);
   const where = modifySearch({
-    search: query.search,
+    search: query.search!,
     stringFields: ["coachNumber", "coachCode"],
   });
 
@@ -80,7 +85,7 @@ const getAllCoachService = async (query: TQuery) => {
     }),
     prisma.coach.count(),
   ]);
-  console.log(result);
+
   const meta = createMetaConfig({
     page: page,
     limit: limit,
@@ -117,9 +122,56 @@ const getSingleCoachService = async (id: string) => {
   return result;
 };
 
+// GET COACH VIA STATUS
+const getCoachViaStatusService = async (query: TQuery) => {
+  const { limit, page, skip } = paginationHelper(query.page, query.limit);
+
+  // MARGE HERE SEARCH AND STATUS CONDITIONS
+  const where = {
+    ...modifySearch({
+      search: query.search || "",
+      stringFields: ["coachNumber", "coachCode"],
+    }),
+    ...(query.status && {
+      status: query.status.toUpperCase() as CoachStatus,
+    }),
+  };
+
+  const [result, total] = await prisma.$transaction([
+    prisma.coach.findMany({
+      where,
+      include: {
+        coachModel: {
+          select: {
+            type: true,
+            name: true,
+            layoutType: true,
+            totalSeats: true,
+          },
+        },
+      },
+      skip,
+      take: limit,
+    }),
+    prisma.coach.count({ where }),
+  ]);
+
+  const meta = createMetaConfig({
+    page: page,
+    limit: limit,
+    totalData: total,
+  });
+
+  return {
+    meta,
+    data: result,
+  };
+};
+
 export const CoachService = {
   createCoachService,
   getAllCoachService,
   getSingleCoachService,
   getCoachOptionService,
+  getCoachViaStatusService,
 };

@@ -44,7 +44,10 @@ const createRouteService = async (payload: ICreateRoute) => {
 // GET ALL ROUTE
 const GetAllRouteService = async (query: TQuery) => {
   const pagination = paginationHelper(query.page, query.limit);
-  const where = modifySearch({ search: query.search, stringFields: ["name"] });
+  const where = modifySearch({
+    search: query?.search!,
+    stringFields: ["name"],
+  });
 
   const [result, total] = await prisma.$transaction([
     prisma.route.findMany({
@@ -69,6 +72,7 @@ const GetAllRouteService = async (query: TQuery) => {
             name: true,
           },
         },
+        _count: { select: { routeStations: true } },
       },
     }),
 

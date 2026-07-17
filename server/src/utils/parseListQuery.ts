@@ -16,11 +16,15 @@ const querySchema = z
       .default(10),
 
     search: z.string({ error: "Search must be a string" }).default(""),
+    status: z
+      .string({ error: "status must be a string" })
+      .default("")
+      .optional(),
   })
   .strict();
 
 export async function parseListQuery(query: Request["query"]) {
-  const allowedKeys = ["page", "limit", "search"];
+  const allowedKeys = ["page", "limit", "search", "status"];
   const invalidKeys = Object.keys(query).filter(
     (key) => !allowedKeys.includes(key),
   );

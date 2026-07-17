@@ -3,6 +3,11 @@ import prisma from "../../../helper/prisma";
 import { AppError } from "../../error/AppError";
 import { ICreateCoachModel } from "./coach-model.interface";
 import { generateCoachModelSeats } from "./coach-model.utils";
+import { TQuery } from "../../../interface/query";
+import { paginationHelper } from "../../../helper/paginationHelper";
+import { modifySearch } from "../../../utils/modifySearch";
+import { createMetaConfig } from "../../../utils/createMetaConfig";
+import { CoachType } from "../../../generated/prisma/enums";
 
 // CREATE COACH MODEL. ITS THE BLUE PRINT OF A COACH
 const createCoachModelService = async (payload: ICreateCoachModel) => {
@@ -37,9 +42,35 @@ const getCoachModelForCreateCoachService = async () => {
 };
 
 // GET ALL COACH MODEL
-const getAllCoachModelCoachService = async () => {
-  const result = await prisma.coachModel.findMany({});
-  return result;
+const getAllCoachModelCoachService = async (query: TQuery) => {
+  const { limit, page, skip } = paginationHelper(query.page, query.limit);
+  const where = modifySearch({
+    search: query.search!,
+    stringFields: ["name"],
+    enumFields: [
+      {
+        field: "type",
+        values: Object.values(CoachType),
+      },
+    ],
+    numberFields: ["totalSeats"],
+  });
+
+  const [result, total] = await prisma.$transaction([
+    prisma.coachModel.findMany({ where }),
+    prisma.coachModel.count({ where }),
+  ]);
+
+  const meta = createMetaConfig({
+    page: page,
+    limit: limit,
+    totalData: total,
+  });
+
+  return {
+    meta,
+    data: result,
+  };
 };
 
 // GET SINGLE COACH MODEL

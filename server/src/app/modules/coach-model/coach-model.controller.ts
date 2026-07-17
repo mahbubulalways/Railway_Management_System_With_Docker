@@ -3,6 +3,7 @@ import catchAsync from "../../../utils/catchAsync";
 import { AppError } from "../../error/AppError";
 import { CoachModelService } from "./coach-model.service";
 import sendResponse from "../../../utils/sendResponse";
+import { parseListQuery } from "../../../utils/parseListQuery";
 
 // CREATE PERMISSION INTO DB
 const createCoachModelController = catchAsync(async (req, res) => {
@@ -43,12 +44,19 @@ const getCoachModelForCreateCoachController = catchAsync(async (req, res) => {
 
 // GET ALL COACH MODEL
 const getAllCoachModelCoachCoachController = catchAsync(async (req, res) => {
-  const result = await CoachModelService.getAllCoachModelCoachService();
-  if (!result.length) {
-    throw new AppError(
-      StatusCodes.BAD_REQUEST,
-      "Opps! Failed to find coach model.",
-    );
+  const { page, limit, search } = await parseListQuery(req.query);
+  const result = await CoachModelService.getAllCoachModelCoachService({
+    page,
+    limit,
+    search,
+  });
+  if (!result.data.length) {
+    sendResponse(res, {
+      message: "Opps! Failed to find coach model.",
+      statusCode: StatusCodes.OK,
+      success: true,
+      data: [],
+    });
   } else {
     sendResponse(res, {
       message: "Coach model found successfully",

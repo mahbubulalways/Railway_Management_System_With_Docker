@@ -22,8 +22,15 @@ router.get(
 // OPTIONS
 router.get(
   "/options",
-  // AuthGuard(USER_ROLE.ADMIN),
+  AuthGuard(USER_ROLE.ADMIN),
   CoachController.getCoachOptionController,
+);
+
+// GET COACH VIA STATUS
+router.get(
+  "/status",
+  AuthGuard(USER_ROLE.ADMIN),
+  CoachController.getCoachViaStatusController,
 );
 
 // GET SINGLE COACH

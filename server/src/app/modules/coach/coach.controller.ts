@@ -4,6 +4,7 @@ import { AppError } from "../../error/AppError";
 import { CoachService } from "./coach.service";
 import sendResponse from "../../../utils/sendResponse";
 import { parseListQuery } from "../../../utils/parseListQuery";
+import { CoachStatus } from "../../../generated/prisma/enums";
 
 const createCoachController = catchAsync(async (req, res) => {
   const body = req.body.data;
@@ -70,7 +71,6 @@ const getCoachOptionController = catchAsync(async (req, res) => {
 // GET SINGLE COACH
 const getSingleCoachController = catchAsync(async (req, res) => {
   const id = req.params.id as string;
-  console.log(id);
   const result = await CoachService.getSingleCoachService(id);
   if (!result) {
     throw new AppError(StatusCodes.BAD_REQUEST, "Opps! Failed to find coach .");
@@ -84,9 +84,38 @@ const getSingleCoachController = catchAsync(async (req, res) => {
   }
 });
 
+// GET COACH VIA STATUS
+const getCoachViaStatusController = catchAsync(async (req, res) => {
+  const { page, limit, search, status } = await parseListQuery(req.query);
+  const result = await CoachService.getCoachViaStatusService({
+    page,
+    limit,
+    search,
+    status,
+  });
+
+  if (!result.data.length) {
+    sendResponse(res, {
+      message: "Coach not found",
+      statusCode: StatusCodes.OK,
+      success: true,
+      data: [],
+    });
+  } else {
+    sendResponse(res, {
+      message: "Coach  found successfully",
+      statusCode: StatusCodes.OK,
+      success: true,
+      data: result,
+    });
+  }
+});
+
+//
 export const CoachController = {
   createCoachController,
   getAllCoachController,
   getSingleCoachController,
   getCoachOptionController,
+  getCoachViaStatusController,
 };

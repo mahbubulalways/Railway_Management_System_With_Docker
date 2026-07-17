@@ -10,7 +10,7 @@ import coachModelRoutes from "../app/modules/coach-model/coach-model.route";
 import coachRoutes from "../app/modules/coach/coach.route";
 import routeRoutes from "../app/modules/route/route.route";
 import trainRoutes from "../app/modules/train/train.route";
-
+import scheduleRoutes from "../app/modules/schedule/schedule.route";
 type TApplicationRoutes = {
   route: Router;
   path: string;
@@ -61,6 +61,10 @@ const applicationRoutes: TApplicationRoutes[] = [
   {
     path: "/train",
     route: trainRoutes,
+  },
+  {
+    path: "/schedule",
+    route: scheduleRoutes,
   },
 ];
 applicationRoutes.forEach((element) => router.use(element.path, element.route));

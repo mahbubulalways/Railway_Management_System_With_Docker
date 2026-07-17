@@ -230,7 +230,7 @@ export type ScheduleGroupByOutputType = {
   direction: $Enums.Direction
   name: string | null
   startTime: string
-  runningDays: runtime.JsonValue
+  runningDays: $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date
   validUntil: Date | null
@@ -269,7 +269,7 @@ export type ScheduleWhereInput = {
   direction?: Prisma.EnumDirectionFilter<"Schedule"> | $Enums.Direction
   name?: Prisma.StringNullableFilter<"Schedule"> | string | null
   startTime?: Prisma.StringFilter<"Schedule"> | string
-  runningDays?: Prisma.JsonFilter<"Schedule">
+  runningDays?: Prisma.EnumWeekDayNullableListFilter<"Schedule">
   bookingOpenDays?: Prisma.IntFilter<"Schedule"> | number
   validFrom?: Prisma.DateTimeFilter<"Schedule"> | Date | string
   validUntil?: Prisma.DateTimeNullableFilter<"Schedule"> | Date | string | null
@@ -302,6 +302,7 @@ export type ScheduleOrderByWithRelationInput = {
 
 export type ScheduleWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  trainId_direction?: Prisma.ScheduleTrainIdDirectionCompoundUniqueInput
   AND?: Prisma.ScheduleWhereInput | Prisma.ScheduleWhereInput[]
   OR?: Prisma.ScheduleWhereInput[]
   NOT?: Prisma.ScheduleWhereInput | Prisma.ScheduleWhereInput[]
@@ -310,7 +311,7 @@ export type ScheduleWhereUniqueInput = Prisma.AtLeast<{
   direction?: Prisma.EnumDirectionFilter<"Schedule"> | $Enums.Direction
   name?: Prisma.StringNullableFilter<"Schedule"> | string | null
   startTime?: Prisma.StringFilter<"Schedule"> | string
-  runningDays?: Prisma.JsonFilter<"Schedule">
+  runningDays?: Prisma.EnumWeekDayNullableListFilter<"Schedule">
   bookingOpenDays?: Prisma.IntFilter<"Schedule"> | number
   validFrom?: Prisma.DateTimeFilter<"Schedule"> | Date | string
   validUntil?: Prisma.DateTimeNullableFilter<"Schedule"> | Date | string | null
@@ -320,7 +321,7 @@ export type ScheduleWhereUniqueInput = Prisma.AtLeast<{
   train?: Prisma.XOR<Prisma.TrainScalarRelationFilter, Prisma.TrainWhereInput>
   route?: Prisma.XOR<Prisma.RouteScalarRelationFilter, Prisma.RouteWhereInput>
   tripInstances?: Prisma.TripInstanceListRelationFilter
-}, "id">
+}, "id" | "trainId_direction">
 
 export type ScheduleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -353,7 +354,7 @@ export type ScheduleScalarWhereWithAggregatesInput = {
   direction?: Prisma.EnumDirectionWithAggregatesFilter<"Schedule"> | $Enums.Direction
   name?: Prisma.StringNullableWithAggregatesFilter<"Schedule"> | string | null
   startTime?: Prisma.StringWithAggregatesFilter<"Schedule"> | string
-  runningDays?: Prisma.JsonWithAggregatesFilter<"Schedule">
+  runningDays?: Prisma.EnumWeekDayNullableListFilter<"Schedule">
   bookingOpenDays?: Prisma.IntWithAggregatesFilter<"Schedule"> | number
   validFrom?: Prisma.DateTimeWithAggregatesFilter<"Schedule"> | Date | string
   validUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"Schedule"> | Date | string | null
@@ -367,7 +368,7 @@ export type ScheduleCreateInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -386,7 +387,7 @@ export type ScheduleUncheckedCreateInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -401,7 +402,7 @@ export type ScheduleUpdateInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -420,7 +421,7 @@ export type ScheduleUncheckedUpdateInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -437,7 +438,7 @@ export type ScheduleCreateManyInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -451,7 +452,7 @@ export type ScheduleUpdateManyMutationInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -467,7 +468,7 @@ export type ScheduleUncheckedUpdateManyInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -484,6 +485,19 @@ export type ScheduleListRelationFilter = {
 
 export type ScheduleOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type EnumWeekDayNullableListFilter<$PrismaModel = never> = {
+  equals?: $Enums.WeekDay[] | Prisma.ListEnumWeekDayFieldRefInput<$PrismaModel> | null
+  has?: $Enums.WeekDay | Prisma.EnumWeekDayFieldRefInput<$PrismaModel> | null
+  hasEvery?: $Enums.WeekDay[] | Prisma.ListEnumWeekDayFieldRefInput<$PrismaModel>
+  hasSome?: $Enums.WeekDay[] | Prisma.ListEnumWeekDayFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
+export type ScheduleTrainIdDirectionCompoundUniqueInput = {
+  trainId: string
+  direction: $Enums.Direction
 }
 
 export type ScheduleCountOrderByAggregateInput = {
@@ -629,8 +643,17 @@ export type ScheduleUncheckedUpdateManyWithoutRouteNestedInput = {
   deleteMany?: Prisma.ScheduleScalarWhereInput | Prisma.ScheduleScalarWhereInput[]
 }
 
+export type ScheduleCreaterunningDaysInput = {
+  set: $Enums.WeekDay[]
+}
+
 export type EnumDirectionFieldUpdateOperationsInput = {
   set?: $Enums.Direction
+}
+
+export type ScheduleUpdaterunningDaysInput = {
+  set?: $Enums.WeekDay[]
+  push?: $Enums.WeekDay | $Enums.WeekDay[]
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -656,7 +679,7 @@ export type ScheduleCreateWithoutTrainInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -673,7 +696,7 @@ export type ScheduleUncheckedCreateWithoutTrainInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -719,7 +742,7 @@ export type ScheduleScalarWhereInput = {
   direction?: Prisma.EnumDirectionFilter<"Schedule"> | $Enums.Direction
   name?: Prisma.StringNullableFilter<"Schedule"> | string | null
   startTime?: Prisma.StringFilter<"Schedule"> | string
-  runningDays?: Prisma.JsonFilter<"Schedule">
+  runningDays?: Prisma.EnumWeekDayNullableListFilter<"Schedule">
   bookingOpenDays?: Prisma.IntFilter<"Schedule"> | number
   validFrom?: Prisma.DateTimeFilter<"Schedule"> | Date | string
   validUntil?: Prisma.DateTimeNullableFilter<"Schedule"> | Date | string | null
@@ -733,7 +756,7 @@ export type ScheduleCreateWithoutRouteInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -750,7 +773,7 @@ export type ScheduleUncheckedCreateWithoutRouteInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -791,7 +814,7 @@ export type ScheduleCreateWithoutTripInstancesInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -809,7 +832,7 @@ export type ScheduleUncheckedCreateWithoutTripInstancesInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -839,7 +862,7 @@ export type ScheduleUpdateWithoutTripInstancesInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -857,7 +880,7 @@ export type ScheduleUncheckedUpdateWithoutTripInstancesInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -872,7 +895,7 @@ export type ScheduleCreateManyTrainInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -886,7 +909,7 @@ export type ScheduleUpdateWithoutTrainInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -903,7 +926,7 @@ export type ScheduleUncheckedUpdateWithoutTrainInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -919,7 +942,7 @@ export type ScheduleUncheckedUpdateManyWithoutTrainInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -934,7 +957,7 @@ export type ScheduleCreateManyRouteInput = {
   direction: $Enums.Direction
   name?: string | null
   startTime: string
-  runningDays: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleCreaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays: number
   validFrom: Date | string
   validUntil?: Date | string | null
@@ -948,7 +971,7 @@ export type ScheduleUpdateWithoutRouteInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -965,7 +988,7 @@ export type ScheduleUncheckedUpdateWithoutRouteInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -981,7 +1004,7 @@ export type ScheduleUncheckedUpdateManyWithoutRouteInput = {
   direction?: Prisma.EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
-  runningDays?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  runningDays?: Prisma.ScheduleUpdaterunningDaysInput | $Enums.WeekDay[]
   bookingOpenDays?: Prisma.IntFieldUpdateOperationsInput | number
   validFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1123,7 +1146,7 @@ export type $SchedulePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     direction: $Enums.Direction
     name: string | null
     startTime: string
-    runningDays: runtime.JsonValue
+    runningDays: $Enums.WeekDay[]
     bookingOpenDays: number
     validFrom: Date
     validUntil: Date | null
@@ -1562,7 +1585,7 @@ export interface ScheduleFieldRefs {
   readonly direction: Prisma.FieldRef<"Schedule", 'Direction'>
   readonly name: Prisma.FieldRef<"Schedule", 'String'>
   readonly startTime: Prisma.FieldRef<"Schedule", 'String'>
-  readonly runningDays: Prisma.FieldRef<"Schedule", 'Json'>
+  readonly runningDays: Prisma.FieldRef<"Schedule", 'WeekDay[]'>
   readonly bookingOpenDays: Prisma.FieldRef<"Schedule", 'Int'>
   readonly validFrom: Prisma.FieldRef<"Schedule", 'DateTime'>
   readonly validUntil: Prisma.FieldRef<"Schedule", 'DateTime'>

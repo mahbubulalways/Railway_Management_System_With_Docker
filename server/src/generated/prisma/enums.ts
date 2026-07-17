@@ -127,6 +127,19 @@ export const TripStatus = {
 export type TripStatus = (typeof TripStatus)[keyof typeof TripStatus]
 
 
+export const WeekDay = {
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY',
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY'
+} as const
+
+export type WeekDay = (typeof WeekDay)[keyof typeof WeekDay]
+
+
 export const ShiftType = {
   MORNING: 'MORNING',
   EVENING: 'EVENING',

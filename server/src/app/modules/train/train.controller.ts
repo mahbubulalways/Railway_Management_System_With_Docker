@@ -48,16 +48,11 @@ const getAllTrainController = catchAsync(async (req, res) => {
 
 // GET SINGLE TRAIN AND DETAILS
 const getSingleTrainController = catchAsync(async (req, res) => {
-  const id = req.params.id as string;
-  const result = await TrainService.getSingleTrainService(id);
+  const trainId = req.params.trainId as string;
+  const result = await TrainService.getSingleTrainService(trainId);
 
   if (!result) {
-    sendResponse(res, {
-      message: "Opps! No Train found.",
-      statusCode: StatusCodes.OK,
-      success: true,
-      data: [],
-    });
+    throw new AppError(StatusCodes.NOT_FOUND, "Opps! No Train found.");
   } else {
     sendResponse(res, {
       message: "Train retrieved successfully",

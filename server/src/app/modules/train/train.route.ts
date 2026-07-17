@@ -27,4 +27,9 @@ router.get(
   TrainController.getAllTrainController,
 );
 
+router.get(
+  "/single/:trainId",
+  // AuthGuard(USER_ROLE.ADMIN),
+  TrainController.getSingleTrainController,
+);
 export default router;

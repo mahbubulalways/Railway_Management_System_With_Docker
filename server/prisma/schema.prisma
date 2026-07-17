@@ -389,17 +389,27 @@ enum TripStatus {
   DELAYED
 }
 
+enum WeekDay {
+  SATURDAY
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}
+
 // ============ SCHEDULE (Master/Template) ============
 model Schedule {
   id              String         @id @default(ulid())
   trainId         String
-  train           Train          @relation(fields: [trainId], references: [id])
+  train           Train          @relation(fields: [trainId], references: [trainId])
   routeId         String
   route           Route          @relation(fields: [routeId], references: [id])
   direction       Direction
   name            String?
   startTime       String
-  runningDays     Json
+  runningDays     WeekDay[]
   bookingOpenDays Int
   validFrom       DateTime
   validUntil      DateTime?
@@ -408,6 +418,7 @@ model Schedule {
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
 
+  @@unique([trainId, direction])
   @@map("schedules")
 }
 
