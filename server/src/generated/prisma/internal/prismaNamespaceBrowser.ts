@@ -210,6 +210,8 @@ export const CoachModelScalarFieldEnum = {
   layoutType: 'layoutType',
   description: 'description',
   totalSeats: 'totalSeats',
+  pricePerKm: 'pricePerKm',
+  minimumFare: 'minimumFare',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

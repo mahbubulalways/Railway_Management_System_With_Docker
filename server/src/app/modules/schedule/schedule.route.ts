@@ -24,4 +24,11 @@ router.get(
   AuthGuard(USER_ROLE.ADMIN),
   ScheduleController.getTrainAndRouteOptionController,
 );
+
+// GET SINGLE SCHEDULE
+router.get(
+  "/single/:id",
+  // AuthGuard(USER_ROLE.ADMIN),
+  ScheduleController.getSingleScheduleController,
+);
 export default router;

@@ -1915,6 +1915,8 @@ export const CoachModelScalarFieldEnum = {
   layoutType: 'layoutType',
   description: 'description',
   totalSeats: 'totalSeats',
+  pricePerKm: 'pricePerKm',
+  minimumFare: 'minimumFare',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2219,6 +2221,20 @@ export type EnumCoachLayoutTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'CoachLayoutType[]'
  */
 export type ListEnumCoachLayoutTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CoachLayoutType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 

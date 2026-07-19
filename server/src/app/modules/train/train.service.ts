@@ -64,7 +64,7 @@ const getSingleTrainService = async (trainId: string) => {
           },
         },
       },
-      schedules: true,
+      schedules: { include: { route: { select: { name: true } } } },
     },
   });
   return result;

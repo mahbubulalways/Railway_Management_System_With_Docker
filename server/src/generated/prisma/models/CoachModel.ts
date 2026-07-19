@@ -28,10 +28,14 @@ export type AggregateCoachModel = {
 
 export type CoachModelAvgAggregateOutputType = {
   totalSeats: number | null
+  pricePerKm: runtime.Decimal | null
+  minimumFare: runtime.Decimal | null
 }
 
 export type CoachModelSumAggregateOutputType = {
   totalSeats: number | null
+  pricePerKm: runtime.Decimal | null
+  minimumFare: runtime.Decimal | null
 }
 
 export type CoachModelMinAggregateOutputType = {
@@ -41,6 +45,8 @@ export type CoachModelMinAggregateOutputType = {
   layoutType: $Enums.CoachLayoutType | null
   description: string | null
   totalSeats: number | null
+  pricePerKm: runtime.Decimal | null
+  minimumFare: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +58,8 @@ export type CoachModelMaxAggregateOutputType = {
   layoutType: $Enums.CoachLayoutType | null
   description: string | null
   totalSeats: number | null
+  pricePerKm: runtime.Decimal | null
+  minimumFare: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -63,6 +71,8 @@ export type CoachModelCountAggregateOutputType = {
   layoutType: number
   description: number
   totalSeats: number
+  pricePerKm: number
+  minimumFare: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -71,10 +81,14 @@ export type CoachModelCountAggregateOutputType = {
 
 export type CoachModelAvgAggregateInputType = {
   totalSeats?: true
+  pricePerKm?: true
+  minimumFare?: true
 }
 
 export type CoachModelSumAggregateInputType = {
   totalSeats?: true
+  pricePerKm?: true
+  minimumFare?: true
 }
 
 export type CoachModelMinAggregateInputType = {
@@ -84,6 +98,8 @@ export type CoachModelMinAggregateInputType = {
   layoutType?: true
   description?: true
   totalSeats?: true
+  pricePerKm?: true
+  minimumFare?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -95,6 +111,8 @@ export type CoachModelMaxAggregateInputType = {
   layoutType?: true
   description?: true
   totalSeats?: true
+  pricePerKm?: true
+  minimumFare?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +124,8 @@ export type CoachModelCountAggregateInputType = {
   layoutType?: true
   description?: true
   totalSeats?: true
+  pricePerKm?: true
+  minimumFare?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -204,6 +224,8 @@ export type CoachModelGroupByOutputType = {
   layoutType: $Enums.CoachLayoutType
   description: string | null
   totalSeats: number
+  pricePerKm: runtime.Decimal
+  minimumFare: runtime.Decimal | null
   createdAt: Date
   updatedAt: Date
   _count: CoachModelCountAggregateOutputType | null
@@ -238,6 +260,8 @@ export type CoachModelWhereInput = {
   layoutType?: Prisma.EnumCoachLayoutTypeFilter<"CoachModel"> | $Enums.CoachLayoutType
   description?: Prisma.StringNullableFilter<"CoachModel"> | string | null
   totalSeats?: Prisma.IntFilter<"CoachModel"> | number
+  pricePerKm?: Prisma.DecimalFilter<"CoachModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.DecimalNullableFilter<"CoachModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"CoachModel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CoachModel"> | Date | string
   seats?: Prisma.CoachModelSeatListRelationFilter
@@ -251,6 +275,8 @@ export type CoachModelOrderByWithRelationInput = {
   layoutType?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
+  pricePerKm?: Prisma.SortOrder
+  minimumFare?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   seats?: Prisma.CoachModelSeatOrderByRelationAggregateInput
@@ -267,6 +293,8 @@ export type CoachModelWhereUniqueInput = Prisma.AtLeast<{
   layoutType?: Prisma.EnumCoachLayoutTypeFilter<"CoachModel"> | $Enums.CoachLayoutType
   description?: Prisma.StringNullableFilter<"CoachModel"> | string | null
   totalSeats?: Prisma.IntFilter<"CoachModel"> | number
+  pricePerKm?: Prisma.DecimalFilter<"CoachModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.DecimalNullableFilter<"CoachModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"CoachModel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CoachModel"> | Date | string
   seats?: Prisma.CoachModelSeatListRelationFilter
@@ -280,6 +308,8 @@ export type CoachModelOrderByWithAggregationInput = {
   layoutType?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
+  pricePerKm?: Prisma.SortOrder
+  minimumFare?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CoachModelCountOrderByAggregateInput
@@ -299,6 +329,8 @@ export type CoachModelScalarWhereWithAggregatesInput = {
   layoutType?: Prisma.EnumCoachLayoutTypeWithAggregatesFilter<"CoachModel"> | $Enums.CoachLayoutType
   description?: Prisma.StringNullableWithAggregatesFilter<"CoachModel"> | string | null
   totalSeats?: Prisma.IntWithAggregatesFilter<"CoachModel"> | number
+  pricePerKm?: Prisma.DecimalWithAggregatesFilter<"CoachModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.DecimalNullableWithAggregatesFilter<"CoachModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CoachModel"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CoachModel"> | Date | string
 }
@@ -310,6 +342,8 @@ export type CoachModelCreateInput = {
   layoutType?: $Enums.CoachLayoutType
   description?: string | null
   totalSeats: number
+  pricePerKm?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seats?: Prisma.CoachModelSeatCreateNestedManyWithoutCoachModelInput
@@ -323,6 +357,8 @@ export type CoachModelUncheckedCreateInput = {
   layoutType?: $Enums.CoachLayoutType
   description?: string | null
   totalSeats: number
+  pricePerKm?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seats?: Prisma.CoachModelSeatUncheckedCreateNestedManyWithoutCoachModelInput
@@ -336,6 +372,8 @@ export type CoachModelUpdateInput = {
   layoutType?: Prisma.EnumCoachLayoutTypeFieldUpdateOperationsInput | $Enums.CoachLayoutType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
+  pricePerKm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seats?: Prisma.CoachModelSeatUpdateManyWithoutCoachModelNestedInput
@@ -349,6 +387,8 @@ export type CoachModelUncheckedUpdateInput = {
   layoutType?: Prisma.EnumCoachLayoutTypeFieldUpdateOperationsInput | $Enums.CoachLayoutType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
+  pricePerKm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seats?: Prisma.CoachModelSeatUncheckedUpdateManyWithoutCoachModelNestedInput
@@ -362,6 +402,8 @@ export type CoachModelCreateManyInput = {
   layoutType?: $Enums.CoachLayoutType
   description?: string | null
   totalSeats: number
+  pricePerKm?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -373,6 +415,8 @@ export type CoachModelUpdateManyMutationInput = {
   layoutType?: Prisma.EnumCoachLayoutTypeFieldUpdateOperationsInput | $Enums.CoachLayoutType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
+  pricePerKm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -384,6 +428,8 @@ export type CoachModelUncheckedUpdateManyInput = {
   layoutType?: Prisma.EnumCoachLayoutTypeFieldUpdateOperationsInput | $Enums.CoachLayoutType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
+  pricePerKm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -395,12 +441,16 @@ export type CoachModelCountOrderByAggregateInput = {
   layoutType?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
+  pricePerKm?: Prisma.SortOrder
+  minimumFare?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CoachModelAvgOrderByAggregateInput = {
   totalSeats?: Prisma.SortOrder
+  pricePerKm?: Prisma.SortOrder
+  minimumFare?: Prisma.SortOrder
 }
 
 export type CoachModelMaxOrderByAggregateInput = {
@@ -410,6 +460,8 @@ export type CoachModelMaxOrderByAggregateInput = {
   layoutType?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
+  pricePerKm?: Prisma.SortOrder
+  minimumFare?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -421,12 +473,16 @@ export type CoachModelMinOrderByAggregateInput = {
   layoutType?: Prisma.SortOrder
   description?: Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
+  pricePerKm?: Prisma.SortOrder
+  minimumFare?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CoachModelSumOrderByAggregateInput = {
   totalSeats?: Prisma.SortOrder
+  pricePerKm?: Prisma.SortOrder
+  minimumFare?: Prisma.SortOrder
 }
 
 export type CoachModelScalarRelationFilter = {
@@ -440,6 +496,22 @@ export type EnumCoachTypeFieldUpdateOperationsInput = {
 
 export type EnumCoachLayoutTypeFieldUpdateOperationsInput = {
   set?: $Enums.CoachLayoutType
+}
+
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type CoachModelCreateNestedOneWithoutSeatsInput = {
@@ -477,6 +549,8 @@ export type CoachModelCreateWithoutSeatsInput = {
   layoutType?: $Enums.CoachLayoutType
   description?: string | null
   totalSeats: number
+  pricePerKm?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   coaches?: Prisma.CoachCreateNestedManyWithoutCoachModelInput
@@ -489,6 +563,8 @@ export type CoachModelUncheckedCreateWithoutSeatsInput = {
   layoutType?: $Enums.CoachLayoutType
   description?: string | null
   totalSeats: number
+  pricePerKm?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   coaches?: Prisma.CoachUncheckedCreateNestedManyWithoutCoachModelInput
@@ -517,6 +593,8 @@ export type CoachModelUpdateWithoutSeatsInput = {
   layoutType?: Prisma.EnumCoachLayoutTypeFieldUpdateOperationsInput | $Enums.CoachLayoutType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
+  pricePerKm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coaches?: Prisma.CoachUpdateManyWithoutCoachModelNestedInput
@@ -529,6 +607,8 @@ export type CoachModelUncheckedUpdateWithoutSeatsInput = {
   layoutType?: Prisma.EnumCoachLayoutTypeFieldUpdateOperationsInput | $Enums.CoachLayoutType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
+  pricePerKm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coaches?: Prisma.CoachUncheckedUpdateManyWithoutCoachModelNestedInput
@@ -541,6 +621,8 @@ export type CoachModelCreateWithoutCoachesInput = {
   layoutType?: $Enums.CoachLayoutType
   description?: string | null
   totalSeats: number
+  pricePerKm?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seats?: Prisma.CoachModelSeatCreateNestedManyWithoutCoachModelInput
@@ -553,6 +635,8 @@ export type CoachModelUncheckedCreateWithoutCoachesInput = {
   layoutType?: $Enums.CoachLayoutType
   description?: string | null
   totalSeats: number
+  pricePerKm?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   seats?: Prisma.CoachModelSeatUncheckedCreateNestedManyWithoutCoachModelInput
@@ -581,6 +665,8 @@ export type CoachModelUpdateWithoutCoachesInput = {
   layoutType?: Prisma.EnumCoachLayoutTypeFieldUpdateOperationsInput | $Enums.CoachLayoutType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
+  pricePerKm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seats?: Prisma.CoachModelSeatUpdateManyWithoutCoachModelNestedInput
@@ -593,6 +679,8 @@ export type CoachModelUncheckedUpdateWithoutCoachesInput = {
   layoutType?: Prisma.EnumCoachLayoutTypeFieldUpdateOperationsInput | $Enums.CoachLayoutType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
+  pricePerKm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumFare?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seats?: Prisma.CoachModelSeatUncheckedUpdateManyWithoutCoachModelNestedInput
@@ -645,6 +733,8 @@ export type CoachModelSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   layoutType?: boolean
   description?: boolean
   totalSeats?: boolean
+  pricePerKm?: boolean
+  minimumFare?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   seats?: boolean | Prisma.CoachModel$seatsArgs<ExtArgs>
@@ -659,6 +749,8 @@ export type CoachModelSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   layoutType?: boolean
   description?: boolean
   totalSeats?: boolean
+  pricePerKm?: boolean
+  minimumFare?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["coachModel"]>
@@ -670,6 +762,8 @@ export type CoachModelSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   layoutType?: boolean
   description?: boolean
   totalSeats?: boolean
+  pricePerKm?: boolean
+  minimumFare?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["coachModel"]>
@@ -681,11 +775,13 @@ export type CoachModelSelectScalar = {
   layoutType?: boolean
   description?: boolean
   totalSeats?: boolean
+  pricePerKm?: boolean
+  minimumFare?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CoachModelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "layoutType" | "description" | "totalSeats" | "createdAt" | "updatedAt", ExtArgs["result"]["coachModel"]>
+export type CoachModelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "layoutType" | "description" | "totalSeats" | "pricePerKm" | "minimumFare" | "createdAt" | "updatedAt", ExtArgs["result"]["coachModel"]>
 export type CoachModelInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seats?: boolean | Prisma.CoachModel$seatsArgs<ExtArgs>
   coaches?: boolean | Prisma.CoachModel$coachesArgs<ExtArgs>
@@ -707,6 +803,8 @@ export type $CoachModelPayload<ExtArgs extends runtime.Types.Extensions.Internal
     layoutType: $Enums.CoachLayoutType
     description: string | null
     totalSeats: number
+    pricePerKm: runtime.Decimal
+    minimumFare: runtime.Decimal | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["coachModel"]>
@@ -1140,6 +1238,8 @@ export interface CoachModelFieldRefs {
   readonly layoutType: Prisma.FieldRef<"CoachModel", 'CoachLayoutType'>
   readonly description: Prisma.FieldRef<"CoachModel", 'String'>
   readonly totalSeats: Prisma.FieldRef<"CoachModel", 'Int'>
+  readonly pricePerKm: Prisma.FieldRef<"CoachModel", 'Decimal'>
+  readonly minimumFare: Prisma.FieldRef<"CoachModel", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"CoachModel", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CoachModel", 'DateTime'>
 }

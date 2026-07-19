@@ -19,7 +19,6 @@ const createScheduleController = catchAsync(async (req, res) => {
       message: "Schedule created successfully",
       statusCode: StatusCodes.OK,
       success: true,
-      data: result,
     });
   }
 });
@@ -69,8 +68,25 @@ const getAllScheduleController = catchAsync(async (req, res) => {
   }
 });
 
+// GET SINGLE SCHEDULE
+const getSingleScheduleController = catchAsync(async (req, res) => {
+  const id = req.params.id as string;
+  const result = await ScheduleService.getSingleScheduleService(id);
+  if (!result) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "Opps! No schedule found.");
+  } else {
+    sendResponse(res, {
+      message: "Schedule found successfully",
+      statusCode: StatusCodes.OK,
+      success: true,
+      data: result,
+    });
+  }
+});
+
 export const ScheduleController = {
   getTrainAndRouteOptionController,
   createScheduleController,
   getAllScheduleController,
+  getSingleScheduleController,
 };

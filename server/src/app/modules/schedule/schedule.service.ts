@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import { Prisma, Schedule, TripStatus } from "../../../generated/prisma/client";
 import prisma from "../../../helper/prisma";
 import { AppError } from "../../error/AppError";
-import { WEEK_DAYS } from "./schedule.utils";
+import { trainTimeManagement, WEEK_DAYS } from "./schedule.utils";
 import { TQuery } from "../../../interface/query";
 import { paginationHelper } from "../../../helper/paginationHelper";
 import { modifySearch } from "../../../utils/modifySearch";
@@ -151,7 +151,6 @@ const getAllScheduleService = async (query: TQuery) => {
       skip,
       take: limit,
       orderBy: { createdAt: "asc" },
-      include: { tripInstances: true },
     }),
     prisma.schedule.count({ where }),
   ]);
@@ -167,10 +166,53 @@ const getAllScheduleService = async (query: TQuery) => {
   };
 };
 
+// GET SINGLE SCHEDULE
+const getSingleScheduleService = async (id: string) => {
+  const result = await prisma.schedule.findFirst({
+    where: { id },
+    include: {
+      route: {
+        select: {
+          name: true,
+          routeStations: {
+            include: { station: { select: { name: true, stationId: true } } },
+            orderBy: { sequence: "asc" },
+          },
+        },
+      },
+      train: { select: { name: true, trainId: true } },
+      tripInstances: { orderBy: { journeyDate: "desc" } },
+    },
+  });
+
+  if (!result) {
+    throw new AppError(StatusCodes.NOT_FOUND, "Schedule not found.");
+  }
+  const formatStationData = result?.route?.routeStations.map((rs) => ({
+    stopTime: rs?.stopTime,
+    travelTimeFromPrevious: rs?.travelTimeFromPrevious!,
+  }));
+
+  const times = trainTimeManagement(result?.startTime, formatStationData);
+  const routeStations = result.route.routeStations.map((station, index) => ({
+    ...station,
+    ...times[index],
+  }));
+
+  return {
+    ...result,
+    route: {
+      ...result.route,
+      routeStations,
+    },
+  };
+};
+
 export const ScheduleService = {
   getTrainAndRouteOptionService,
   createScheduleService,
   getAllScheduleService,
+  getSingleScheduleService,
 };
 
 // day time train  direction
